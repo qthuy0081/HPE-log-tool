@@ -63,6 +63,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\ConfigUtilities.cs" />
+    <Compile Include="Common\DbHelper.cs" />
     <Compile Include="Models\IN_CheckEtag.cs" />
     <Compile Include="Models\IN_CheckForceOpen.cs" />
     <Compile Include="Models\IN_CheckPrepaidCard.cs" />
@@ -75,6 +77,8 @@
     <Compile Include="Models\OUT_CheckForceOpen.cs" />
     <Compile Include="Models\OUT_CheckPrepaidCard.cs" />
     <Compile Include="Models\OUT_CheckSmartCard.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Views\index.xaml.cs">
       <DependentUpon>index.xaml</DependentUpon>
     </Compile>
@@ -122,8 +126,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

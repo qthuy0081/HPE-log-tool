@@ -14,6 +14,20 @@ namespace HPE_Log_Tool
             LS_Lane = new HashSet<LS_Lane>();
         }
 
+        public LS_Station(int stationID, string stationCode, string name, int companyID, int stationType, string address, string telephone, string fax, string note, bool isUsed)
+        {
+            StationID = stationID;
+            StationCode = stationCode;
+            Name = name;
+            CompanyID = companyID;
+            StationType = stationType;
+            Address = address;
+            Telephone = telephone;
+            Fax = fax;
+            Note = note;
+            IsUsed = isUsed;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int StationID { get; set; }

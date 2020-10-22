@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPE_Log_Tool.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace HPE_Log_Tool
         public MainWindow()
         {
             InitializeComponent();
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            contentControl.Content = new config();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            contentControl.Content = new ChangePassword();
         }
     }
 }

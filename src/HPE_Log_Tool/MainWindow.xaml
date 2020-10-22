@@ -12,6 +12,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <uc:index Grid.Row="1" />
+        <ContentControl Name="contentControl" Grid.Row="0" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Margin="10" Width="200" Content="Config" Click="Button_Click"/>
+            <Button Margin="10" Width="200" Content="Change Password" Click="Button_Click_1"/>
+        </StackPanel>
     </Grid>
 </Window>

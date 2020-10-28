@@ -48,6 +48,7 @@ namespace HPE_Log_Tool.Models
         public string ExcelPath { get; set; }
         public string SaveImagePath { get; set; }
         #endregion
+     // cần thì t
         #region Method
 
         public static ConfigModel LoadConfig()

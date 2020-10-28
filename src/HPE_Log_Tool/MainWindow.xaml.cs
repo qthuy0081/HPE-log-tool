@@ -21,10 +21,17 @@ namespace HPE_Log_Tool
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
             
+        }
+
+        public void ShowNavigateButton()
+        {
+            btnChangePassword.Visibility = Visibility.Visible;
+            btnConfig.Visibility = Visibility.Visible;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -35,6 +42,11 @@ namespace HPE_Log_Tool
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             contentControl.Content = new ChangePassword();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            contentControl.Content = new config();
         }
     }
 }

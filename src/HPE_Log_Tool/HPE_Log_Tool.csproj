@@ -88,6 +88,9 @@
     <Compile Include="Views\index.xaml.cs">
       <DependentUpon>index.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\InitialPassword.xaml.cs">
+      <DependentUpon>InitialPassword.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -109,6 +112,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InitialPassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

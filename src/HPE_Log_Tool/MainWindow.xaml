@@ -6,16 +6,17 @@
         xmlns:local="clr-namespace:HPE_Log_Tool"
         mc:Ignorable="d"
         xmlns:uc="clr-namespace:HPE_Log_Tool.Views"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ContentControl Name="contentControl" Grid.Row="0" />
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Button Margin="10" Width="200" Content="Config" Click="Button_Click"/>
-            <Button Margin="10" Width="200" Content="Change Password" Click="Button_Click_1"/>
+        <StackPanel x:Name="navButtonStack" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button x:Name="btnConfig" Margin="10" Width="200" Content="Config" Click="Button_Click"  />
+            <Button x:Name="btnChangePassword" Margin="10" Width="200" Content="Change Password" Click="Button_Click_1"/>
         </StackPanel>
+        
     </Grid>
 </Window>

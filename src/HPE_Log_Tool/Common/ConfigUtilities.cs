@@ -7,13 +7,14 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
-
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace HPE_Log_Tool.Common
 {
     public class Utility
     {
+
         public static byte[] GetBytes(string stringBytes, char delimeter)
         {
             string[] arrayString = stringBytes.Split(delimeter);
@@ -240,8 +241,19 @@ namespace HPE_Log_Tool.Common
                 array[index]++;
             }
         }
-
-
+        public static void checkExist(string ip, string path)
+        {
+            string url = @"\\{0}\{1}";
+            string fullPath = string.Format(url, ip, path);
+            if (File.Exists(fullPath))
+            {
+                MessageBox.Show("Folder exist");
+            }
+            else
+            {
+                MessageBox.Show("Folder does not exist");
+            }
+        }
         #region Encrypt Method
 
         /// <summary>

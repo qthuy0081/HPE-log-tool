@@ -38,7 +38,8 @@ namespace HPE_Log_Tool.Models
 
         [DataMember(EmitDefaultValue = false)]
         public string SystemValue { get; set; }
-
+        [DataMember(EmitDefaultValue = false)]
+        public string ConfigPassword { get; set; }
         #endregion Security
         #region Image Path
         [DataMember(EmitDefaultValue = false)]
@@ -77,13 +78,17 @@ namespace HPE_Log_Tool.Models
                 if (!string.IsNullOrEmpty(config.SystemValue))
                 {
                     byte[] pass = Encoding.UTF8.GetBytes(config.SystemValue);
-                    if (config.DatabasePassword != null) //chỗ này lấy pass decrypt
+                    if (config.DatabasePassword != null) 
                     {
                         config.DatabasePassword = Encoding.UTF8.GetString(Utility.Decrypt(Utility.GetBytes(config.DatabasePassword), pass, iv));
                     }
                     if(config.CommandPassword != null)
                     {
                         config.CommandPassword = Encoding.UTF8.GetString(Utility.Decrypt(Utility.GetBytes(config.CommandPassword), pass, iv));
+                    }
+                    if(config.ConfigPassword != null)
+                    {
+                        config.ConfigPassword = Encoding.UTF8.GetString(Utility.Decrypt(Utility.GetBytes(config.ConfigPassword), pass, iv));
                     }
                 }
             }
@@ -113,6 +118,13 @@ namespace HPE_Log_Tool.Models
                         config.CommandPassword = Utility.ByteAsString(encrypted, false);
 
                     }
+                    if (config.ConfigPassword != null)
+                    {
+                        encrypted = Utility.Encrypt(Encoding.UTF8.GetBytes(config.ConfigPassword), pass, iv);
+                        config.ConfigPassword = Utility.ByteAsString(encrypted, false);
+
+                    }
+
                 }
             }
             catch (Exception ex)

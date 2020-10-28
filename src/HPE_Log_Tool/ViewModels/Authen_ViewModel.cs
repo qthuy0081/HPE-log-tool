@@ -54,7 +54,7 @@ namespace HPE_Log_Tool.ViewModels
         #region Method
         public void verifyUser()
         {
-            if(_password == _config.ConfigPassword)
+            if(_password == Config.ConfigPassword)
             {
                 MessageBox.Show("Login successfully");
             }
@@ -67,8 +67,8 @@ namespace HPE_Log_Tool.ViewModels
         #endregion
 
         #region Cmd
-        ICommand _loginCmd;
-        ICommand loginCmd => _loginCmd ?? (_loginCmd = new RelayCommand(param=> { verifyUser(); } ));
+        private ICommand _loginCmd;
+        public ICommand loginCmd => _loginCmd ?? (_loginCmd = new RelayCommand(param=> { verifyUser(); } ));
         #endregion
     }
 }

@@ -65,6 +65,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\ConfigUtilities.cs" />
     <Compile Include="Common\DbHelper.cs" />
+    <Compile Include="Common\PasswordHelper.cs" />
     <Compile Include="Models\IN_CheckEtag.cs" />
     <Compile Include="Models\IN_CheckForceOpen.cs" />
     <Compile Include="Models\IN_CheckPrepaidCard.cs" />

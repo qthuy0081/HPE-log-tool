@@ -65,6 +65,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\ConfigUtilities.cs" />
     <Compile Include="Common\DbHelper.cs" />
+    <Compile Include="Common\PasswordHelper.cs" />
     <Compile Include="Models\IN_CheckEtag.cs" />
     <Compile Include="Models\IN_CheckForceOpen.cs" />
     <Compile Include="Models\IN_CheckPrepaidCard.cs" />
@@ -72,12 +73,13 @@
     <Compile Include="Models\LS_Lane.cs" />
     <Compile Include="Models\LS_Shift.cs" />
     <Compile Include="Models\LS_Station.cs" />
-	<Compile Include="Models\Station.cs"/>
+    <Compile Include="Models\Station.cs" />
     <Compile Include="Model1.cs" />
     <Compile Include="Models\OUT_CheckEtag.cs" />
     <Compile Include="Models\OUT_CheckForceOpen.cs" />
     <Compile Include="Models\OUT_CheckPrepaidCard.cs" />
     <Compile Include="Models\OUT_CheckSmartCard.cs" />
+    <Compile Include="ViewModels\Authen_ViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindow_VM.cs" />
     <Compile Include="Models\ConfigModel.cs" />

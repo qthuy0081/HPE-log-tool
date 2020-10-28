@@ -72,12 +72,15 @@
     <Compile Include="Models\LS_Lane.cs" />
     <Compile Include="Models\LS_Shift.cs" />
     <Compile Include="Models\LS_Station.cs" />
+	<Compile Include="Models\Station.cs"/>
     <Compile Include="Model1.cs" />
     <Compile Include="Models\OUT_CheckEtag.cs" />
     <Compile Include="Models\OUT_CheckForceOpen.cs" />
     <Compile Include="Models\OUT_CheckPrepaidCard.cs" />
     <Compile Include="Models\OUT_CheckSmartCard.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Models\ConfigModel.cs" />
+    <Compile Include="ViewModels\Config_ViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Views\ChangePassword.xaml.cs">
       <DependentUpon>ChangePassword.xaml</DependentUpon>

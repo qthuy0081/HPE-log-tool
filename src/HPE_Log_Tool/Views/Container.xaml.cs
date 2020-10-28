@@ -10,32 +10,35 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace HPE_Log_Tool.Views
 {
     /// <summary>
-    /// Interaction logic for InitialPassword.xaml
+    /// Interaction logic for Container.xaml
     /// </summary>
-    public partial class InitialPassword : Window
+    public partial class Container : Window
     {
-        Container container = new Container();
-        public InitialPassword()
+        private config cf = new config();
+        private ChangePassword cp = new ChangePassword();
+        public Container()
         {
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(pwdPassword.Password.ToString() == "1234")
-            {
-                this.Close();
-                container.ShowDialog();
-                
-            }
+            contentControl.Content = cf;
         }
 
-       
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            contentControl.Content = cp;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            contentControl.Content = cf;
+        }
     }
 }

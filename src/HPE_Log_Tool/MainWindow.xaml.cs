@@ -1,4 +1,5 @@
-﻿using HPE_Log_Tool.Views;
+﻿using HPE_Log_Tool.ViewModels;
+using HPE_Log_Tool.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace HPE_Log_Tool
         
         public MainWindow()
         {
+            var viewModel = new MainWindow_VM();
+            DataContext = viewModel;
             InitializeComponent();
             
         }
@@ -32,6 +35,11 @@ namespace HPE_Log_Tool
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

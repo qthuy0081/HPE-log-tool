@@ -11,6 +11,7 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
@@ -31,13 +32,13 @@
         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Password" FontSize="15"/>
         <PasswordBox x:Name="pwdPassword" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" FontSize="20"/>
         <CheckBox x:Name="cbShowPass" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" Content="Show Password" VerticalAlignment="Center" FontSize="16"/>
-        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Timeout" FontSize="15"/>
-        <TextBox x:Name="txtTimeout" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" FontSize="20"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Action Password" FontSize="15"/>
-        <PasswordBox x:Name="pwdActionPass" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" FontSize="20"/>
-        <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="StationID" FontSize="15"/>
-        <ComboBox Name="cboStation" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Text="Select" FontSize="20"/>
-        <Button x:Name="btnCheck" Grid.Row="3" Grid.Column="3" Width="100" Height="30" Content="Check" FontSize="15"/>
-        <Button x:Name="btnSave" Grid.Row="3" Grid.Column="5" Width="100" Height="30" Content="Save" FontSize="15"/>
+        <TextBlock Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" Text="Timeout" FontSize="15"/>
+        <TextBox x:Name="txtTimeout" Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" FontSize="20"/>
+        <TextBlock Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" Text="Action Password" FontSize="15"/>
+        <PasswordBox x:Name="pwdActionPass" Grid.Row="1" Grid.Column="6" VerticalAlignment="Center" FontSize="20"/>
+        <TextBlock Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" Text="StationID" FontSize="15"/>
+        <ComboBox Name="cboStation" Grid.Row="2" Grid.Column="6" VerticalAlignment="Center" Text="Select" FontSize="20"/>
+        <Button x:Name="btnCheck" Grid.Row="3" Grid.Column="4" Width="100" Height="30" Content="Check" FontSize="15"/>
+        <Button x:Name="btnSave" Grid.Row="3" Grid.Column="6" Width="100" Height="30" Content="Save" FontSize="15"/>
     </Grid>
 </UserControl>

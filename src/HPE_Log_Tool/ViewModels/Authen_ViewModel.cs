@@ -10,15 +10,16 @@ using System.Windows.Input;
 
 namespace HPE_Log_Tool.ViewModels
 {
-    class Authen_ViewModel : BaseViewModel
+    public class Authen_ViewModel : BaseViewModel
     {
         ConfigModel _config = new ConfigModel();
         string _password;
         #region Props
         public Authen_ViewModel()
         {
-            Config = ConfigModel.LoadConfig();
-            if(Config.ConfigPassword == null)
+            
+            Config = ConfigModel.LoadConfig();     
+            if (Config.ConfigPassword == null)
             {
                 Config.ConfigPassword = "ITD2020";
                 ConfigModel.SaveConfig(Config);
@@ -52,11 +53,14 @@ namespace HPE_Log_Tool.ViewModels
         #endregion
 
         #region Method
-        public void verifyUser()
+        private void verifyUser()
         {
-            if(_password == Config.ConfigPassword)
+            Config = ConfigModel.LoadConfig();
+            if(Password == Config.ConfigPassword)
             {
-                MessageBox.Show("Login successfully");
+                CloseWindow();
+                ContainerView view = new ContainerView();
+                view.ShowDialog();
             }
             else
             {

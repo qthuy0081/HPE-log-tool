@@ -42,8 +42,8 @@ namespace HPE_Log_Tool.ViewModels
         //Constructor
         public Config_ViewModel()
         {
-            _config = ConfigModel.LoadConfig();
-            _stations = new ObservableCollection<Station>
+            Config = ConfigModel.LoadConfig();
+            Stations = new ObservableCollection<Station>
             {
                 new Station(0,"00","Trung Tâm"),
                 new Station(1,"01","Đầu Tuyền"),

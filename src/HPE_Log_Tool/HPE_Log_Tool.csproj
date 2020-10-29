@@ -85,6 +85,7 @@
     <Compile Include="Models\OUT_CheckSmartCard.cs" />
     <Compile Include="ViewModels\Authen_ViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\ChangePassword_ViewModel.cs" />
     <Compile Include="ViewModels\MainWindow_VM.cs" />
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="ViewModels\Config_ViewModel.cs" />

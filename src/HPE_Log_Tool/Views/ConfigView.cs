@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPE_Log_Tool.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,12 @@ namespace HPE_Log_Tool.Views
     /// </summary>
     public partial class ConfigView : UserControl
     {
+        Config_ViewModel viewmodel;
         public ConfigView()
         {
             InitializeComponent();
+            viewmodel = new Config_ViewModel();
+            DataContext = viewmodel;
         }
     }
 }

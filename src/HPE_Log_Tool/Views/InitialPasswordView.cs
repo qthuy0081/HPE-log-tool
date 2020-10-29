@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPE_Log_Tool.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,21 +22,23 @@ namespace HPE_Log_Tool.Views
     public partial class InitialPasswordView : Window
     {
         ContainerView container = new ContainerView();
+        Authen_ViewModel viewmodel;
         public InitialPasswordView()
         {
             InitializeComponent();
-        }
+            viewmodel = new Authen_ViewModel();
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+            viewmodel.CloseWindowRequest += closeWindow;
+            DataContext = viewmodel;
+        }
+        private void closeWindow()
         {
-            if(pwdPassword.Password.ToString() == "1234")
-            {
+           if(viewmodel != null)
+           {
+                viewmodel.Dispose();
                 this.Close();
-                container.ShowDialog();
-                
-            }
+           }
         }
 
-       
     }
 }

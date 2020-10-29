@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-
+using System.Windows.Input;
 
 namespace HPE_Log_Tool.ViewModels
 {
@@ -11,6 +11,7 @@ namespace HPE_Log_Tool.ViewModels
     /// It provides support for property change notifications
     /// and has a DisplayName property.  This class is abstract.
     /// </summary>
+    /// 
     public abstract class BaseViewModel : INotifyPropertyChanged, IDisposable
     {
         protected BaseViewModel()
@@ -101,5 +102,68 @@ namespace HPE_Log_Tool.ViewModels
             if (pc != null)
                 pc(this, new PropertyChangedEventArgs(propertyName));
         }
+        #region Close Window Command
+        public Action CloseAction { get; set; }
+        RelayCommand _cmdCloseWindow;
+        public ICommand cmdCloseWindow
+        {
+            get
+            {
+                if (_cmdCloseWindow == null)
+                {
+                    _cmdCloseWindow = new RelayCommand(param => CloseWindow(), param => CanCloseWindow());
+                }
+                return _cmdCloseWindow;
+            }
+        }
+
+        public event Action CloseWindowRequest;
+
+        public virtual void CloseWindow()
+        {
+            Action action = this.CloseWindowRequest;
+            if (action != null)
+            {
+                //BaseModel.UpdateLogoutTracking();
+                action();
+            }
+        }
+
+        public virtual bool CanCloseWindow()
+        {
+            return true;
+        }
+
+        #endregion Close Window Command
+
+        #region Minimize Window Command
+
+        RelayCommand _cmdMinimizeWindow;
+        public ICommand cmdMinimizeWindow
+        {
+            get
+            {
+                if (_cmdMinimizeWindow == null)
+                {
+                    _cmdMinimizeWindow = new RelayCommand(param => MinimizeWindow(), param => CanMinimizeWindow());
+                }
+                return _cmdMinimizeWindow;
+            }
+        }
+
+        public event Action MinimizeWindowRequest;
+
+        public virtual void MinimizeWindow()
+        {
+            MinimizeWindowRequest?.Invoke();
+        }
+
+        public virtual bool CanMinimizeWindow()
+        {
+            return true;
+        }
+
+        #endregion Minimize Window Command
+
     }
 }

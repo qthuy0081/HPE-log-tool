@@ -112,7 +112,6 @@ namespace HPE_Log_Tool.Models
                         encrypted = Utility.Encrypt(Encoding.UTF8.GetBytes(config.DatabasePassword), pass, iv);
                         config.DatabasePassword = Utility.ByteAsString(encrypted, false);
                     }
-
                     if(config.CommandPassword != null)
                     {
                         encrypted = Utility.Encrypt(Encoding.UTF8.GetBytes(config.CommandPassword), pass, iv);
@@ -125,7 +124,6 @@ namespace HPE_Log_Tool.Models
                         config.ConfigPassword = Utility.ByteAsString(encrypted, false);
 
                     }
-
                 }
             }
             catch (Exception ex)

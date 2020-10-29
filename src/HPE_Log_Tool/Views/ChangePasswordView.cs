@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPE_Log_Tool.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,13 @@ namespace HPE_Log_Tool.Views
     /// </summary>
     public partial class ChangePasswordView : UserControl
     {
+        ChangePassword_ViewModel viewmodel;
+
         public ChangePasswordView()
         {
             InitializeComponent();
+            viewmodel = new ChangePassword_ViewModel();
+            DataContext = viewmodel;
         }
     }
 }

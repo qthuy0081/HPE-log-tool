@@ -18,8 +18,8 @@ namespace HPE_Log_Tool.ViewModels
         public Authen_ViewModel()
         {
             
-            Config = ConfigModel.LoadConfig();
-            if(Config.ConfigPassword == null)
+            Config = ConfigModel.LoadConfig();     
+            if (Config.ConfigPassword == null)
             {
                 Config.ConfigPassword = "ITD2020";
                 ConfigModel.SaveConfig(Config);
@@ -55,7 +55,8 @@ namespace HPE_Log_Tool.ViewModels
         #region Method
         private void verifyUser()
         {
-            if(_password == Config.ConfigPassword)
+            Config = ConfigModel.LoadConfig();
+            if(Password == Config.ConfigPassword)
             {
                 CloseWindow();
                 ContainerView view = new ContainerView();
@@ -63,8 +64,6 @@ namespace HPE_Log_Tool.ViewModels
             }
             else
             {
-
-
                 MessageBox.Show("Wrong password. Try again!");
             }
         }

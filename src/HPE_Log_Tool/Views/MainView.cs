@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPE_Log_Tool.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +17,11 @@ using System.Windows.Shapes;
 namespace HPE_Log_Tool.Views
 {
     /// <summary>
-    /// Interaction logic for ChangePassword.xaml
+    /// Interaction logic for Main.xaml
     /// </summary>
-    public partial class ChangePassword : UserControl
+    public partial class MainView : UserControl
     {
-        public ChangePassword()
+        public MainView()
         {
             InitializeComponent();
         }

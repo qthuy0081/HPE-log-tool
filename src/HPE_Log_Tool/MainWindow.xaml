@@ -15,6 +15,6 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <uc:Main Grid.Row="1" />
+        <uc:MainView Grid.Row="1" />
     </Grid>
 </Window>

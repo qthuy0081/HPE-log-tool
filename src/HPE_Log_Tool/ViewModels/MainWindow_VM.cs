@@ -15,7 +15,7 @@ namespace HPE_Log_Tool.ViewModels
         #endregion
 
         #region Properties
-        Container container = new Container();
+        ContainerView container = new ContainerView();
         #endregion
 
         #region Methods
@@ -27,7 +27,7 @@ namespace HPE_Log_Tool.ViewModels
         // Load Config Form
         private void ShowConfig()
         {
-            InitialPassword ip = new InitialPassword();
+            InitialPasswordView ip = new InitialPasswordView();
             ip.ShowDialog();
         }
 

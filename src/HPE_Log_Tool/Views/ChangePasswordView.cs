@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace HPE_Log_Tool.Views
 {
     /// <summary>
-    /// Interaction logic for index.xaml
+    /// Interaction logic for ChangePassword.xaml
     /// </summary>
-    public partial class index : UserControl
+    public partial class ChangePasswordView : UserControl
     {
-        public index()
+        public ChangePasswordView()
         {
             InitializeComponent();
         }

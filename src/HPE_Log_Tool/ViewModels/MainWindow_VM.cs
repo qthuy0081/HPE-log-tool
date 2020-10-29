@@ -83,40 +83,55 @@ namespace HPE_Log_Tool.ViewModels
         }
         private void Browse()
         {
+            
             try
             {
                 string url = @"\\{0}";
-                Ping ping = new Ping();
-                IPAddress address = IPAddress.Parse(IP);
-                PingReply pong = ping.Send(address);
-                if (pong.Status != IPStatus.Success)
+                if(string.IsNullOrEmpty(IP))
                 {
                     MessageBox.Show("IP address does not exist");
+                    return;
+                }
+                bool rs = IPAddress.TryParse(IP, out IPAddress address); // chỗ này ko bị exception, nếu parse dc thì rs = true, address có kq
+                if (rs)
+                {
+                    Ping ping = new Ping();
+                    PingReply pong = ping.Send(address);
+                    if (pong.Status != IPStatus.Success)
+
+                    {                      
+                        MessageBox.Show("IP address does not exist");
+                    }
+                    else
+                    {
+                        OpenFileDialog openFileDialog1 = new OpenFileDialog
+                        {
+
+                            InitialDirectory = string.Format(url, IP),
+                            Title = "Browse Text Files",
+                            CheckPathExists = true,
+                            CheckFileExists = true,
+
+
+                            DefaultExt = "txt",
+                            Filter = "txt files (*.txt)|*.txt",
+                            FilterIndex = 2,
+                            RestoreDirectory = true,
+
+                            ReadOnlyChecked = true,
+                            ShowReadOnly = true
+                        };
+
+                        if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            Path = openFileDialog1.FileName;
+                        }
+                    }
                 }
                 else
                 {
-                    OpenFileDialog openFileDialog1 = new OpenFileDialog
-                    {
+                    MessageBox.Show("Incorrect IP address");
 
-                        InitialDirectory = string.Format(url, IP),
-                        Title = "Browse Text Files",
-                        CheckPathExists = true,
-                        CheckFileExists = true,
-
-
-                        DefaultExt = "txt",
-                        Filter = "txt files (*.txt)|*.txt",
-                        FilterIndex = 2,
-                        RestoreDirectory = true,
-
-                        ReadOnlyChecked = true,
-                        ShowReadOnly = true
-                    };
-
-                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                    {
-                        Path = openFileDialog1.FileName;
-                    }
                 }
             }
             catch(Exception e)

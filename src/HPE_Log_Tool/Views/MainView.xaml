@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:HPE_Log_Tool.Views"
              mc:Ignorable="d" 
              d:DesignHeight="750" d:DesignWidth="900">
+    <UserControl.InputBindings>
+        <KeyBinding Key="F7" Command="{Binding cmdLoadConfig}"></KeyBinding>
+    </UserControl.InputBindings>
+    
     <Grid  >
         <Grid Height="130" Width="800px" Margin="0px" HorizontalAlignment="Left" VerticalAlignment="Top"  >
             <Grid.RowDefinitions >

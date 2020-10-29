@@ -25,10 +25,9 @@ namespace HPE_Log_Tool
         
         public MainWindow()
         {
-            var viewModel = new MainWindow_VM();
-            DataContext = viewModel;
             InitializeComponent();
-            
+            var vm = new MainWindow_VM();
+            DataContext = vm;
         }
 
        

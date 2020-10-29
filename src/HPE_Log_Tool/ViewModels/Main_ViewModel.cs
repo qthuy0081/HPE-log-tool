@@ -1,14 +1,19 @@
-﻿using HPE_Log_Tool.Views;
+﻿using HPE_Log_Tool.Common;
+using HPE_Log_Tool.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
+using MessageBox = System.Windows.MessageBox;
 
 namespace HPE_Log_Tool.ViewModels
 {
@@ -21,7 +26,37 @@ namespace HPE_Log_Tool.ViewModels
         #endregion
 
         #region Properties
-        private string _filePath = "C:/Users/thanh/Downloads/Log_MTC_2020/LogFolder/InsertTransaction_Log_20201020.txt";
+        //private string _filePath = "C:/Users/thanh/Downloads/Log_MTC_2020/LogFolder/InsertTransaction_Log_20201020.txt";
+
+        private string _ip;
+        public string IP
+        {
+            get => _ip;
+            set
+            {
+                if (_ip != value)
+                {
+                    _ip = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _path;
+        public string Path
+        {
+            get => _path;
+            set
+            {
+                if (_path != value)
+                {
+                    _path = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
 
         private Main_ViewModel _SelectedItem;
         public Main_ViewModel SelectedItem
@@ -165,6 +200,79 @@ namespace HPE_Log_Tool.ViewModels
             
         }
 
+        private bool CanClick()
+        {
+            return true;
+        }
+
+        private void Check()
+        {
+            Utility.checkExist(Path);
+        }
+        private bool CanBrowse()
+        {
+            return true;
+        }
+        private void Browse()
+        {
+
+            try
+            {
+                string url = @"\\{0}";
+                if (string.IsNullOrEmpty(IP))
+                {
+                    MessageBox.Show("IP address does not exist");
+                    return;
+                }
+                bool rs = IPAddress.TryParse(IP, out IPAddress address); // chỗ này ko bị exception, nếu parse dc thì rs = true, address có kq
+                if (rs)
+                {
+                    Ping ping = new Ping();
+                    PingReply pong = ping.Send(address);
+                    if (pong.Status != IPStatus.Success)
+                    {
+                        MessageBox.Show("IP address does not exist");
+                    }
+                    else
+                    {
+                        string initDirect = string.Format(url, IP);
+                        OpenFileDialog openFileDialog1 = new OpenFileDialog
+                        {
+
+                            InitialDirectory = initDirect,
+                            Title = "Browse Text Files",
+                            CheckPathExists = true,
+                            CheckFileExists = true,
+
+
+                            DefaultExt = "txt",
+                            Filter = "txt files (*.txt)|*.txt",
+                            FilterIndex = 2,
+                            RestoreDirectory = true,
+
+                            ReadOnlyChecked = true,
+                            ShowReadOnly = true
+                        };
+
+                        if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            Path = openFileDialog1.FileName;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Incorrect IP address");
+
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+        }
+
         // Read Log File 
         private void ReadLogFile()
         {
@@ -178,7 +286,7 @@ namespace HPE_Log_Tool.ViewModels
                 int startIndex;
                 int endIndex;
                 string json;
-                string[] lines = File.ReadAllLines(_filePath);
+                string[] lines = File.ReadAllLines(Path);
                 foreach (string line in lines)
                 {
                     startIndex = line.IndexOf('{');
@@ -241,16 +349,18 @@ namespace HPE_Log_Tool.ViewModels
             
         }
 
-        private bool CanClick()
-        {
-            return true;
-        }
+        
         #endregion
 
         #region Commands
         private ICommand _cmdReadLog;
         public ICommand cmdReadLog => _cmdReadLog ?? (_cmdReadLog = new RelayCommand(param => { ReadLogFile(); }, param => CanClick()));
 
+        private ICommand _cmdCheck;
+        public ICommand cmdCheck => _cmdCheck ?? (_cmdCheck = new RelayCommand(param => { Check(); }, param => CanClick()));
+
+        private ICommand _cmdBrowse;
+        public ICommand cmdBrowse => _cmdBrowse ?? (_cmdBrowse = new RelayCommand(param => { Browse(); }, param => CanBrowse()));
         #endregion
     }
 }

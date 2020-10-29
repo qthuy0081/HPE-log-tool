@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace HPE_Log_Tool.ViewModels
 {
-    class Authen_ViewModel : BaseViewModel
+    public class Authen_ViewModel : BaseViewModel
     {
         ConfigModel _config = new ConfigModel();
         string _password;
@@ -53,19 +53,19 @@ namespace HPE_Log_Tool.ViewModels
         #endregion
 
         #region Method
-        public void verifyUser()
+        private void verifyUser()
         {
             if(_password == Config.ConfigPassword)
             {
-                MessageBox.Show("Login successfully");
-                //here a ơi
                 CloseWindow();
+                ContainerView view = new ContainerView();
+                view.ShowDialog();
             }
             else
             {
-                
-                
 
+
+                MessageBox.Show("Wrong password. Try again!");
             }
         }
 

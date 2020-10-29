@@ -40,6 +40,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -81,27 +84,25 @@
     <Compile Include="Models\OUT_CheckSmartCard.cs" />
     <Compile Include="ViewModels\Authen_ViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Main_ViewModel.cs" />
     <Compile Include="ViewModels\MainWindow_VM.cs" />
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="ViewModels\Config_ViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
-    <Compile Include="Views\ChangePassword.xaml.cs">
-      <DependentUpon>ChangePassword.xaml</DependentUpon>
+    <Compile Include="Views\ChangePasswordView.cs">
+      <DependentUpon>ChangePasswordView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Config.xaml.cs">
-      <DependentUpon>Config.xaml</DependentUpon>
+    <Compile Include="Views\ConfigView.cs">
+      <DependentUpon>ConfigView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Container.xaml.cs">
-      <DependentUpon>Container.xaml</DependentUpon>
+    <Compile Include="Views\ContainerView.cs">
+      <DependentUpon>ContainerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\index.xaml.cs">
-      <DependentUpon>index.xaml</DependentUpon>
+    <Compile Include="Views\InitialPasswordView.cs">
+      <DependentUpon>InitialPasswordView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\InitialPassword.xaml.cs">
-      <DependentUpon>InitialPassword.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Main.xaml.cs">
-      <DependentUpon>Main.xaml</DependentUpon>
+    <Compile Include="Views\MainView.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -115,27 +116,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\ChangePassword.xaml">
+    <Page Include="Views\ChangePasswordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Config.xaml">
+    <Page Include="Views\ConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Container.xaml">
+    <Page Include="Views\ContainerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\index.xaml">
+    <Page Include="Views\InitialPasswordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\InitialPassword.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main.xaml">
+    <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

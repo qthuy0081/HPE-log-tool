@@ -16,13 +16,26 @@ using System.Windows.Shapes;
 namespace HPE_Log_Tool.Views
 {
     /// <summary>
-    /// Interaction logic for config.xaml
+    /// Interaction logic for InitialPassword.xaml
     /// </summary>
-    public partial class config : UserControl
+    public partial class InitialPasswordView : Window
     {
-        public config()
+        ContainerView container = new ContainerView();
+        public InitialPasswordView()
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(pwdPassword.Password.ToString() == "1234")
+            {
+                this.Close();
+                container.ShowDialog();
+                
+            }
+        }
+
+       
     }
 }

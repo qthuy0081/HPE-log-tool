@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPE_Log_Tool.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,26 +17,15 @@ using System.Windows.Shapes;
 namespace HPE_Log_Tool.Views
 {
     /// <summary>
-    /// Interaction logic for InitialPassword.xaml
+    /// Interaction logic for Main.xaml
     /// </summary>
-    public partial class InitialPassword : Window
+    public partial class MainView : UserControl
     {
-        Container container = new Container();
-        public InitialPassword()
+        public MainView()
         {
             InitializeComponent();
+            var viewModel = new Main_ViewModel();
+            DataContext = viewModel;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if(pwdPassword.Password.ToString() == "1234")
-            {
-                this.Close();
-                container.ShowDialog();
-                
-            }
-        }
-
-       
     }
 }

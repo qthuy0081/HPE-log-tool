@@ -18,9 +18,9 @@ namespace HPE_Log_Tool.Views
     /// <summary>
     /// Interaction logic for ChangePassword.xaml
     /// </summary>
-    public partial class ChangePassword : UserControl
+    public partial class ChangePasswordView : UserControl
     {
-        public ChangePassword()
+        public ChangePasswordView()
         {
             InitializeComponent();
         }

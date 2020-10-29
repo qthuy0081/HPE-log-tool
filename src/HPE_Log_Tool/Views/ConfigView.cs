@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace HPE_Log_Tool.Views
 {
     /// <summary>
-    /// Interaction logic for index.xaml
+    /// Interaction logic for config.xaml
     /// </summary>
-    public partial class index : UserControl
+    public partial class ConfigView : UserControl
     {
-        public index()
+        public ConfigView()
         {
             InitializeComponent();
         }

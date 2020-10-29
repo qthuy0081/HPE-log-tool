@@ -17,11 +17,11 @@ namespace HPE_Log_Tool.Views
     /// <summary>
     /// Interaction logic for Container.xaml
     /// </summary>
-    public partial class Container : Window
+    public partial class ContainerView : Window
     {
-        private config cf = new config();
-        private ChangePassword cp = new ChangePassword();
-        public Container()
+        private ConfigView cf = new ConfigView();
+        private ChangePasswordView cp = new ChangePasswordView();
+        public ContainerView()
         {
             InitializeComponent();
         }

@@ -28,10 +28,10 @@
             <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" >Path</Label>
             <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" >Table</Label>
             <ComboBox Grid.Row="0" Grid.Column="1"  ></ComboBox>
-            <TextBox Grid.Row="1" Grid.Column="1"  ></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding IP}" ></TextBox>
             <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
                 <ComboBox Margin="0,0,20,0" Width="160"/>
-                <Button    Content="Check" Margin="0,0,0,0.2" Width="153">
+                <Button Command="{Binding cmdCheck}"   Content="Check" Margin="0,0,0,0.2" Width="153">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -44,8 +44,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,10,0.2" Width="289" ></TextBox>
-                <Button  Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,0" Width="35" Height="31"   >...</Button>
+                <TextBox Text="{Binding Path}"  Grid.Row="2" Grid.Column="1" Margin="0,0,10,0.2" Width="289" ></TextBox>
+                <Button Command="{Binding cmdBrowse}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,0" Width="35" Height="31"   >...</Button>
             </StackPanel>
             <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right"  >Date</Label>
             <Label Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right">Shift</Label>

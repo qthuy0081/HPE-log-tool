@@ -17,6 +17,7 @@ namespace HPE_Log_Tool.ViewModels
         #region Props
         public Authen_ViewModel()
         {
+            
             Config = ConfigModel.LoadConfig();
             if(Config.ConfigPassword == null)
             {
@@ -57,10 +58,14 @@ namespace HPE_Log_Tool.ViewModels
             if(_password == Config.ConfigPassword)
             {
                 MessageBox.Show("Login successfully");
+                //here a ơi
+                CloseWindow();
             }
             else
             {
-                MessageBox.Show("Wrong password. Try again!");
+                
+                
+
             }
         }
 

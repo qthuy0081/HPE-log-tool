@@ -30,7 +30,7 @@
             <ComboBox Grid.Row="0" Grid.Column="1"  ></ComboBox>
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding IP}" ></TextBox>
             <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-                <ComboBox Margin="0,0,20,0" Width="160"/>
+                <ComboBox Margin="0,0,20,0" Width="160" ItemsSource="{Binding tableList}" SelectedItem="{Binding SelectedTable}"/>
                 <Button Command="{Binding cmdCheck}"   Content="Check" Margin="0,0,0,0.2" Width="153">
                     <Button.RenderTransform>
                         <TransformGroup>
@@ -54,12 +54,20 @@
                 <CheckBox Grid.Row="2" Grid.Column="3" >Trans Not Insert</CheckBox>
             </StackPanel>
             <ComboBox Grid.Row="1" Grid.Column="4"></ComboBox>
-            <Button  Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="43,0.2,9.2,0">Load All</Button>
+            <Button  Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="43,0.2,9.2,0" Command="{Binding cmdReadLog}">Load All</Button>
             <DatePicker Grid.Row="0" Grid.Column="4"/>
             <Button Grid.Row="2" Grid.Column="6"  >INSERT</Button>
 
         </Grid>
-        <DataGrid HorizontalAlignment="Left" Height="545" Margin="-9,135,0,0" VerticalAlignment="Top" Width="899"/>
+        <DataGrid Visibility="{Binding tCSC}" ItemsSource="{Binding OUT_CheckSmartCards}" Margin="0,205,0,9.6"
+                  CanUserAddRows="False">
+        </DataGrid>
+        <DataGrid Visibility="{Binding tCFO}" ItemsSource="{Binding OUT_CheckForceOpens}" Margin="0,205,0,9.6"
+                  CanUserAddRows="False">
+        </DataGrid>
+        <DataGrid Visibility="{Binding tCE}" ItemsSource="{Binding OUT_CheckEtags}" Margin="0,205,0,9.6"
+                  CanUserAddRows="False">
+        </DataGrid>
 
 
 

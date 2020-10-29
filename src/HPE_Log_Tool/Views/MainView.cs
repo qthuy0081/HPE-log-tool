@@ -24,6 +24,8 @@ namespace HPE_Log_Tool.Views
         public MainView()
         {
             InitializeComponent();
+            var mainViewModel = new Main_ViewModel();
+            DataContext = mainViewModel;
         }
     }
 }

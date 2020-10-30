@@ -243,9 +243,9 @@ namespace HPE_Log_Tool.Common
         }
         public static void checkExist(string path)
         {
-            string url = @"\\{0}";
+            string url = @"{0}";
             string fullPath = string.Format(url, path);
-            if (File.Exists(fullPath))
+            if (Directory.Exists(fullPath))
             {
                 MessageBox.Show("Folder exist");
             }

@@ -50,10 +50,11 @@ namespace HPE_Log_Tool.ViewModels
         #endregion
 
         #region Commands
+
         private ICommand _cmdLoadConfig;
         public ICommand cmdLoadConfig => _cmdLoadConfig ?? (_cmdLoadConfig = new RelayCommand(param => { ShowConfig(); }, param => CanClick()));
 
-        
+
         #endregion
     }
 }

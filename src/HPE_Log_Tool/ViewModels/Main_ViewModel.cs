@@ -23,6 +23,7 @@ namespace HPE_Log_Tool.ViewModels
         private const string isOutCheckSmartCard = "InsertData - OUT_CheckSmartCard";
         private const string isOutCheckForceOpen = "InsertData - OUT_CheckForceOpen";
         private const string isOutCheckEtag = "InsertData - OUT_CheckEtag";
+        
         #endregion
 
         #region Properties
@@ -221,7 +222,7 @@ namespace HPE_Log_Tool.ViewModels
                 string url = @"\\{0}";
                 if (string.IsNullOrEmpty(IP))
                 {
-                    MessageBox.Show("IP address does not exist");
+                    MessageBox.Show("IP address is empty");
                     return;
                 }
                 bool rs = IPAddress.TryParse(IP, out IPAddress address); // chỗ này ko bị exception, nếu parse dc thì rs = true, address có kq
@@ -234,29 +235,18 @@ namespace HPE_Log_Tool.ViewModels
                         MessageBox.Show("IP address does not exist");
                     }
                     else
-                    {
-                        string initDirect = string.Format(url, IP);
-                        OpenFileDialog openFileDialog1 = new OpenFileDialog
+                    {                      
+                        var fbd = new FolderBrowserDialog
                         {
-
-                            InitialDirectory = initDirect,
-                            Title = "Browse Text Files",
-                            CheckPathExists = true,
-                            CheckFileExists = true,
-
-
-                            DefaultExt = "txt",
-                            Filter = "txt files (*.txt)|*.txt",
-                            FilterIndex = 2,
-                            RestoreDirectory = true,
-
-                            ReadOnlyChecked = true,
-                            ShowReadOnly = true
+                            SelectedPath = string.Format(url, IP)
                         };
-
-                        if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                        
+                        DialogResult result = fbd.ShowDialog();
+                        if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                         {
-                            Path = openFileDialog1.FileName;
+                            //InsertTransaction_Log_20201020
+                             string[] files = Directory.GetFiles(fbd.SelectedPath).Where(w => w.Contains("InsertTransaction_Log_")).ToArray();
+                             Path = fbd.SelectedPath;
                         }
                     }
                 }
@@ -349,7 +339,13 @@ namespace HPE_Log_Tool.ViewModels
             
         }
 
-        
+        // Load Config Form
+        private void ShowConfig()
+        {
+            InitialPasswordView ip = new InitialPasswordView();
+            ip.ShowDialog();
+        }
+
         #endregion
 
         #region Commands
@@ -361,6 +357,9 @@ namespace HPE_Log_Tool.ViewModels
 
         private ICommand _cmdBrowse;
         public ICommand cmdBrowse => _cmdBrowse ?? (_cmdBrowse = new RelayCommand(param => { Browse(); }, param => CanBrowse()));
+
+        private ICommand _cmdLoadConfig;
+        public ICommand cmdLoadConfig => _cmdLoadConfig ?? (_cmdLoadConfig = new RelayCommand(param => { ShowConfig(); }, param => CanClick()));
         #endregion
     }
 }

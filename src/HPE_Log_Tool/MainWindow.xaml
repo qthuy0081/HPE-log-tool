@@ -7,9 +7,7 @@
         mc:Ignorable="d"
         xmlns:uc="clr-namespace:HPE_Log_Tool.Views"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" Closed="Window_Closed">
-    <Window.InputBindings>
-        <KeyBinding Key="F7" Command="{Binding cmdLoadConfig}"></KeyBinding>
-    </Window.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

@@ -8,7 +8,7 @@
     <TabControl>
         <TabItem Header="Cấu hình database">
             <StackPanel Margin="10">
-                <TextBlock FontSize="20" Text="DataBase Config" ></TextBlock>
+                <TextBlock FontSize="20" Text="Insert DataBase " ></TextBlock>
                 <Border BorderBrush="Gray" BorderThickness="1">
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
@@ -22,6 +22,7 @@
 
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
@@ -45,8 +46,8 @@
                         <PasswordBox w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Config.CommandPassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="6" VerticalAlignment="Center" FontSize="20"/>
                         <TextBlock HorizontalAlignment="Right" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" Text="StationID" FontSize="15"/>
                         <ComboBox ItemsSource="{Binding Path=Stations}" DisplayMemberPath="Name" Grid.Row="2" Grid.Column="6" VerticalAlignment="Center" Text="Select" FontSize="20"/>
-                        <Button Command="{Binding checkDbConnectionCmd}" Grid.Row="3" Grid.Column="4" Width="100" Height="30" Content="Kiểm Tra" FontSize="15"/>
-                        <Button Command="{Binding saveconfigCmd}" Grid.Row="3" Grid.Column="6" Width="100" Height="30" Content="Lưu" FontSize="15"/>
+                        <Button Command="{Binding checkDbConnectionCmd}" Grid.Row="5" Grid.Column="4" Width="100" Height="30" Content="Kiểm Tra" FontSize="15"/>
+                        <Button Command="{Binding saveconfigCmd}" Grid.Row="5" Grid.Column="2" Width="160" Height="30" Content="Lưu" FontSize="15"/>
 
                     </Grid>
                 </Border>

@@ -25,7 +25,7 @@ namespace HPE_Log_Tool.ViewModels
         private const string isOutCheckEtag = "InsertData - OUT_CheckEtag";
         private const string fileName = "\\InsertTransaction_Log_";
         private const string fileExt = ".txt";
-        private string[] filePathss;
+        private string[] filePathss;        
         #endregion
 
         #region Properties
@@ -186,7 +186,19 @@ namespace HPE_Log_Tool.ViewModels
                 }
             }
         }
-
+        private LS_Shift _shift;
+        public LS_Shift Shift
+        {
+            get => _shift;
+            set
+            {
+                if (_shift != value)
+                {
+                    _shift = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         private List<string> _filePaths;
         public List<string> filePaths
         {
@@ -259,7 +271,8 @@ namespace HPE_Log_Tool.ViewModels
                 "OUT_CheckForceOpen",
                 "OUT_CheckEtag"
             };
-            shiftList = new List<LS_Shift>();
+            shiftList = DataProvider.GetShifts(true);
+            Shift = shiftList.FirstOrDefault();
             SelectedTable = tableList.FirstOrDefault();
             SelectedDate = new DateTime(2020, 10, 20);
         }
@@ -470,7 +483,15 @@ namespace HPE_Log_Tool.ViewModels
             InitialPasswordView ip = new InitialPasswordView();
             ip.ShowDialog();
         }
-
+        //Binding Shift
+        private void LoadShift()
+        {
+            using (Model1 db = new Model1())
+            {
+                shiftList = db.LS_Shift.ToList();
+            }
+                
+        }
         #endregion
 
         #region Commands
@@ -485,6 +506,7 @@ namespace HPE_Log_Tool.ViewModels
 
         private ICommand _cmdLoadConfig;
         public ICommand cmdLoadConfig => _cmdLoadConfig ?? (_cmdLoadConfig = new RelayCommand(param => { ShowConfig(); }, param => CanClick()));
+     
         #endregion
     }
 }

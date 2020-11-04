@@ -21,12 +21,11 @@ namespace HPE_Log_Tool.Views
     /// </summary>
     public partial class InitialPasswordView : Window
     {
-        ContainerView container = new ContainerView();
-        Authen_ViewModel viewmodel;
+        Config_ViewModel viewmodel;
         public InitialPasswordView()
         {
             InitializeComponent();
-            viewmodel = new Authen_ViewModel();
+            viewmodel = new Config_ViewModel();
 
             viewmodel.CloseWindowRequest += closeWindow;
             DataContext = viewmodel;

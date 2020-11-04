@@ -83,7 +83,6 @@
     <Compile Include="Models\OUT_CheckForceOpen.cs" />
     <Compile Include="Models\OUT_CheckPrepaidCard.cs" />
     <Compile Include="Models\OUT_CheckSmartCard.cs" />
-    <Compile Include="ViewModels\Authen_ViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ChangePassword_ViewModel.cs" />
     <Compile Include="ViewModels\MainWindow_VM.cs" />
@@ -91,14 +90,8 @@
     <Compile Include="ViewModels\Config_ViewModel.cs" />
     <Compile Include="ViewModels\Main_ViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
-    <Compile Include="Views\ChangePasswordView.cs">
-      <DependentUpon>ChangePasswordView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ConfigView.cs">
       <DependentUpon>ConfigView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ContainerView.cs">
-      <DependentUpon>ContainerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InitialPasswordView.cs">
       <DependentUpon>InitialPasswordView.xaml</DependentUpon>
@@ -118,15 +111,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\ChangePasswordView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ConfigView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ContainerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

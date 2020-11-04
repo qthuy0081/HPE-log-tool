@@ -22,7 +22,7 @@ namespace HPE_Log_Tool.ViewModels
         #endregion
 
         #region Properties
-        ContainerView container = new ContainerView();
+        
 
         
 

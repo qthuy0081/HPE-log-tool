@@ -83,6 +83,7 @@
     <Compile Include="Models\OUT_CheckForceOpen.cs" />
     <Compile Include="Models\OUT_CheckPrepaidCard.cs" />
     <Compile Include="Models\OUT_CheckSmartCard.cs" />
+    <Compile Include="Models\AppConfig.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ChangePassword_ViewModel.cs" />
     <Compile Include="ViewModels\MainWindow_VM.cs" />

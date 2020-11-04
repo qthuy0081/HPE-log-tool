@@ -14,9 +14,12 @@ namespace HPE_Log_Tool.ViewModels
     public class Config_ViewModel : BaseViewModel
     {
         #region Props
-        ConfigModel _config = new ConfigModel();
         string _password;
         private ObservableCollection<Station> _stations;
+        private AppConfig _appConfig;
+        private ConfigModel _compareDbConfig = new ConfigModel();
+        private ConfigModel _insertDbConfig = new ConfigModel();
+       
         public string Password
         {
             get => _password;
@@ -29,14 +32,40 @@ namespace HPE_Log_Tool.ViewModels
                 }
             }
         }
-        public ConfigModel Config
+        public AppConfig Config
         {
-            get => _config;
+            get => _appConfig;
+            set 
+            { 
+                if(_appConfig != value)
+                {
+                    _appConfig = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        
+
+        public ConfigModel CompareDbConfig
+        {
+            get => _compareDbConfig;
             set
             {
-                if(_config != value)
+                if(_compareDbConfig != value)
                 {
-                    _config = value;
+                    _compareDbConfig = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public ConfigModel InsertDbConfig
+        {
+            get => _insertDbConfig;
+            set
+            {
+                if(_insertDbConfig != value)
+                {
+                    _insertDbConfig = value;
                     OnPropertyChanged();
                 }
             }
@@ -56,11 +85,13 @@ namespace HPE_Log_Tool.ViewModels
         //Constructor
         public Config_ViewModel()
         {
-            Config = ConfigModel.LoadConfig();
-            if (Config.ConfigPassword == null)
+            Config = AppConfig.LoadConfig();
+            CompareDbConfig = _appConfig.CompareDB;
+            InsertDbConfig = _appConfig.InsertDB;
+            if (Config.AuthenPassword == null)
             {
-                Config.ConfigPassword = "ITD2020";
-                ConfigModel.SaveConfig(Config);
+                Config.AuthenPassword = "ITD2020";
+                AppConfig.SaveConfig(Config);
             }
             Stations = new ObservableCollection<Station>
             {
@@ -72,17 +103,14 @@ namespace HPE_Log_Tool.ViewModels
                 new Station(5,"04","Cuối Tuyến"),
                 new Station(6,"05","Đình Vũ"),
                 new Station(7,"06","TL353"),
-
-
-            };           
-            
+            };
         }
         #endregion
    
         #region Method
         private void saveConfig()
         {
-            bool ret = ConfigModel.SaveConfig(_config);
+            bool ret = AppConfig.SaveConfig(_appConfig);
             if(ret)
             {
                 MessageBox.Show("Save config successfully!");
@@ -93,19 +121,19 @@ namespace HPE_Log_Tool.ViewModels
         }
         private void checkConnection()
         {
-             string connectionString = DbHelper.GetConnectionString(Config.DatabaseServer, Config.DatabaseName, Config.DatabaseUser, Config.DatabasePassword, Config.DatabaseTimeout.ToString());
-             DbHelper db = new DbHelper(connectionString);
-             bool ret = db.CheckOpenConnection();
-             if(ret)
-             {
+            string connectionString = DbHelper.GetConnectionString(CompareDbConfig.DatabaseServer, CompareDbConfig.DatabaseName, CompareDbConfig.DatabaseUser, CompareDbConfig.DatabasePassword, CompareDbConfig.DatabaseTimeout.ToString());
+            DbHelper db = new DbHelper(connectionString);
+            bool ret = db.CheckOpenConnection();
+            if (ret)
+            {
                 MessageBox.Show("Connect to Database successfully!");
-             }
+            }
             else
             {
                 MessageBox.Show("Connect to Database failed");
             }
-            
-            
+
+
         }
         private bool CanClick()
         {
@@ -113,8 +141,8 @@ namespace HPE_Log_Tool.ViewModels
         }
         private void verifyUser()
         {
-            Config = ConfigModel.LoadConfig();
-            if (Password == Config.ConfigPassword)
+            Config = AppConfig.LoadConfig();
+            if (Password == Config.AuthenPassword)
             {
                 CloseWindow();
                 ConfigView view = new ConfigView();

@@ -68,6 +68,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\ConfigUtilities.cs" />
+    <Compile Include="Common\DataProvider.cs" />
     <Compile Include="Common\DbHelper.cs" />
     <Compile Include="Common\PasswordHelper.cs" />
     <Compile Include="Models\IN_CheckEtag.cs" />

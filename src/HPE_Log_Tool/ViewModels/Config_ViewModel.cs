@@ -1,4 +1,5 @@
 ﻿using HPE_Log_Tool.Models;
+using HPE_Log_Tool.Views;
 using ITD_Review_license__plates.Common;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,21 @@ namespace HPE_Log_Tool.ViewModels
     public class Config_ViewModel : BaseViewModel
     {
         #region Props
-        private ConfigModel _config = new ConfigModel();
+        ConfigModel _config = new ConfigModel();
+        string _password;
         private ObservableCollection<Station> _stations;
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                if (_password != value)
+                {
+                    _password = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public ConfigModel Config
         {
             get => _config;
@@ -43,6 +57,11 @@ namespace HPE_Log_Tool.ViewModels
         public Config_ViewModel()
         {
             Config = ConfigModel.LoadConfig();
+            if (Config.ConfigPassword == null)
+            {
+                Config.ConfigPassword = "ITD2020";
+                ConfigModel.SaveConfig(Config);
+            }
             Stations = new ObservableCollection<Station>
             {
                 new Station(0,"00","Trung Tâm"),
@@ -55,7 +74,8 @@ namespace HPE_Log_Tool.ViewModels
                 new Station(7,"06","TL353"),
 
 
-            };
+            };           
+            
         }
         #endregion
    
@@ -91,6 +111,20 @@ namespace HPE_Log_Tool.ViewModels
         {
             return true;
         }
+        private void verifyUser()
+        {
+            Config = ConfigModel.LoadConfig();
+            if (Password == Config.ConfigPassword)
+            {
+                CloseWindow();
+                ConfigView view = new ConfigView();
+                view.Show();
+            }
+            else
+            {
+                MessageBox.Show("Wrong password. Try again!");
+            }
+        }
         #endregion
         #region Command
         private ICommand _saveConfigCmd;
@@ -98,6 +132,8 @@ namespace HPE_Log_Tool.ViewModels
 
         private ICommand _checkDbConnectionCmd;
         public ICommand checkDbConnectionCmd => _checkDbConnectionCmd ?? (_checkDbConnectionCmd = new RelayCommand(param => { checkConnection(); }));
+        private ICommand _loginCmd;
+        public ICommand loginCmd => _loginCmd ?? (_loginCmd = new RelayCommand(param=> { verifyUser(); } ));
         #endregion
     }
 }

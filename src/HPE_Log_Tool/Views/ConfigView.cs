@@ -19,7 +19,7 @@ namespace HPE_Log_Tool.Views
     /// <summary>
     /// Interaction logic for config.xaml
     /// </summary>
-    public partial class ConfigView : UserControl
+    public partial class ConfigView : Window
     {
         Config_ViewModel viewmodel;
         public ConfigView()

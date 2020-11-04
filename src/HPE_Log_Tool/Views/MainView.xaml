@@ -31,7 +31,7 @@
             <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" >IP</Label>
             <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" >Đường dẫn</Label>
             <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" >Bảng</Label>
-            <ComboBox Grid.Row="0" Grid.Column="1"  ></ComboBox>
+            <TextBox IsReadOnly="True" Grid.Row="0" Grid.Column="1"  ></TextBox>
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding IP}" ></TextBox>
             <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
                 <ComboBox Margin="0,0,20,0" Width="160" ItemsSource="{Binding tableList}" SelectedItem="{Binding SelectedTable}"/>

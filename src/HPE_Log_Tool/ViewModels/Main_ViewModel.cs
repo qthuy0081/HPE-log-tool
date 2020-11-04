@@ -25,7 +25,9 @@ namespace HPE_Log_Tool.ViewModels
         private const string isOutCheckEtag = "InsertData - OUT_CheckEtag";
         private const string fileName = "\\InsertTransaction_Log_";
         private const string fileExt = ".txt";
-        private string[] filePathss;        
+        private string[] filePathss;
+        private DateTime startTime;
+        private DateTime endTime;
         #endregion
 
         #region Properties
@@ -159,6 +161,48 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        private ObservableCollection<OUT_CheckSmartCard> _outCheckSmartCardFiltered;
+        public ObservableCollection<OUT_CheckSmartCard> OUT_CheckSmartCardsFiltered
+        {
+            get => _outCheckSmartCardFiltered;
+            set
+            {
+                if (_outCheckSmartCardFiltered != value)
+                {
+                    _outCheckSmartCardFiltered = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<OUT_CheckForceOpen> _outCheckForceOpenFiltered;
+        public ObservableCollection<OUT_CheckForceOpen> OUT_CheckForceOpensFiltered
+        {
+            get => _outCheckForceOpenFiltered;
+            set
+            {
+                if (_outCheckForceOpenFiltered != value)
+                {
+                    _outCheckForceOpenFiltered = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<OUT_CheckEtag> _outCheckEtagFiltered;
+        public ObservableCollection<OUT_CheckEtag> OUT_CheckEtagsFiltered
+        {
+            get => _outCheckEtagFiltered;
+            set
+            {
+                if (_outCheckEtagFiltered != value)
+                {
+                    _outCheckEtagFiltered = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private ObservableCollection<string> _tableList;
         public ObservableCollection<string> tableList
         {
@@ -196,6 +240,7 @@ namespace HPE_Log_Tool.ViewModels
                 {
                     _shift = value;
                     OnPropertyChanged();
+                    ChangeShift(_shift);
                 }
             }
         }
@@ -225,6 +270,7 @@ namespace HPE_Log_Tool.ViewModels
                     _selectedTable = value;
                     OnPropertyChanged();
                     ChangeTable(_selectedTable);
+                    ChangeShift(_shift);
                 }
             }
         }
@@ -239,7 +285,6 @@ namespace HPE_Log_Tool.ViewModels
                 {
                     _selectedShift = value;
                     OnPropertyChanged();
-                    //ChangeShift(_selectedShift);
                 }
             }
         }
@@ -265,6 +310,9 @@ namespace HPE_Log_Tool.ViewModels
             OUT_CheckSmartCards= new ObservableCollection<OUT_CheckSmartCard>();
             OUT_CheckForceOpens = new ObservableCollection<OUT_CheckForceOpen>();
             OUT_CheckEtags = new ObservableCollection<OUT_CheckEtag>();
+            OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>();
+            OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>();
+            OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>();
             filePaths = new List<string>();
             tableList = new ObservableCollection<string> { 
                 "OUT_CheckSmartCard",
@@ -333,7 +381,7 @@ namespace HPE_Log_Tool.ViewModels
 
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
 
             }
@@ -358,8 +406,6 @@ namespace HPE_Log_Tool.ViewModels
         {
             // Giờ có sẵn 1 list path của các fileLog đó rồi nè
             // Xong từ ngày cái mình lấy ra cái đuôi rồi lấy cái file tương ứng theo ngày đó (Ex: 20/10/2020 -> InsertTransaction_Log_20201020)
-            // Với ngày hôm trước lẫn hôm sau luôn, thành ra phải đọc 3 file( Hôm trước, ngày được chọn, hôm sau)
-            string previousDate = Path + fileName + toDateStamp(SelectedDate.AddDays(-1)) + fileExt;
             string currentDate = Path + fileName + toDateStamp(SelectedDate) + fileExt;
             string tomorrowDate = Path + fileName + toDateStamp(SelectedDate.AddDays(1)) + fileExt;
             string[] lines;
@@ -411,35 +457,120 @@ namespace HPE_Log_Tool.ViewModels
                 else
                     MessageBox.Show("Không tồn tại file log cho file tại đường dẫn :" + filePath);
             }
-                MessageBox.Show("Load dữ liệu thành công!");
+            startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));
+            endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59));
+            OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+            OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+            OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+            MessageBox.Show("Load dữ liệu thành công!");
             // Xong rồi nè ahihi
         }
-       
+        
 
         // Change shift
-        private void ChangeShift(string shift)
+        private void ChangeShift(LS_Shift shift)
         {
-            switch (shift)
+            switch (shift.Name)
             {
                 case "All":
                     {
                         // 6:30:00 today -> 6:30:00 tomorrow
+                        startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));
+                        endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59));
+                        switch (SelectedTable)
+                        {
+                            case "OUT_CheckSmartCard":
+                                {
+                                    OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                            case "OUT_CheckForceOpen":
+                                {
+                                    OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                            case "OUT_CheckEtag":
+                                {
+                                    OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                        }
                         
                         break;
                     }
                 case "1":
                     {
                         // 6:30:00 to 11:29:59 
+                        startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));
+                        endTime = SelectedDate.Add(new TimeSpan(11, 29, 59));
+                        switch (SelectedTable)
+                        {
+                            case "OUT_CheckSmartCard":
+                                {
+                                    OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                            case "OUT_CheckForceOpen":
+                                {
+                                    OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                            case "OUT_CheckEtag":
+                                {
+                                    OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                        }
                         break;
                     }
                 case "2":
                     {
-                        // 11:30:30 to 17:59:59
+                        // 11:30:00 to 17:59:59
+                        startTime = SelectedDate.Add(new TimeSpan(11, 30, 00));
+                        endTime = SelectedDate.Add(new TimeSpan(17, 59, 59));
+                        switch (SelectedTable)
+                        {
+                            case "OUT_CheckSmartCard":
+                                {
+                                    OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                            case "OUT_CheckForceOpen":
+                                {
+                                    OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                            case "OUT_CheckEtag":
+                                {
+                                    OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                        }
                         break;
                     }
                 case "3":
                     {
                         // 18:00:00 today -> 6:29:59 tomorrow
+                        startTime = SelectedDate.Add(new TimeSpan(18, 00, 00));
+                        endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59));
+                        switch (SelectedTable)
+                        {
+                            case "OUT_CheckSmartCard":
+                                {
+                                    OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                            case "OUT_CheckForceOpen":
+                                {
+                                    OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                            case "OUT_CheckEtag":
+                                {
+                                    OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    break;
+                                }
+                        }
                         break;
                     }
             }

@@ -50,7 +50,7 @@
             </StackPanel>
             <ComboBox Grid.Row="1" Grid.Column="4"></ComboBox>
             <Button  Grid.Row="3" Grid.Column="4" Margin="42.6,0,34.6,0" Command="{Binding cmdReadLog}">Hiển thị tất cả</Button>
-            <DatePicker Grid.Row="0" Grid.Column="4"/>
+            <DatePicker Grid.Row="0" Grid.Column="4" SelectedDate="{Binding SelectedDate}"/>
             <Button Grid.Row="2" Grid.Column="6"  >INSERT</Button>
 
         </Grid>

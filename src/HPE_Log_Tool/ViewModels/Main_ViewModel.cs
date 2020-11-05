@@ -33,6 +33,7 @@ namespace HPE_Log_Tool.ViewModels
         private AppConfig config;
         string insertDbConn = "";
         string compareDbConn = "";
+
         #endregion
 
         #region Properties
@@ -66,7 +67,21 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
-
+        private bool _isMissingTrans;
+        public bool IsMissingTrans
+        {
+            get => _isMissingTrans;
+            set
+            {
+                if(_isMissingTrans != value)
+                {
+                    _isMissingTrans = value;
+                    OnPropertyChanged();
+                    ChangeShift(Shift);
+                    
+                }
+            }
+        }
 
         private Main_ViewModel _SelectedItem;
         public Main_ViewModel SelectedItem
@@ -490,16 +505,28 @@ namespace HPE_Log_Tool.ViewModels
                             case "OUT_CheckSmartCard":
                                 {
                                     OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if(IsMissingTrans)
+                                    {
+                                        OUT_CheckSmartCardsFiltered =  DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered,compareDbConn);
+                                    }
                                     break;
                                 }
                             case "OUT_CheckForceOpen":
                                 {
                                     OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if(IsMissingTrans)
+                                    {
+                                        OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered,compareDbConn);
+                                    }
                                     break;
                                 }
                             case "OUT_CheckEtag":
                                 {
                                     OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if(IsMissingTrans)
+                                    {
+                                        OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                         }
@@ -516,16 +543,28 @@ namespace HPE_Log_Tool.ViewModels
                             case "OUT_CheckSmartCard":
                                 {
                                     OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if (IsMissingTrans)
+                                    {
+                                        OUT_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                             case "OUT_CheckForceOpen":
                                 {
                                     OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if (IsMissingTrans)
+                                    {
+                                        OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                             case "OUT_CheckEtag":
                                 {
                                     OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if (IsMissingTrans)
+                                    {
+                                        OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                         }
@@ -541,16 +580,28 @@ namespace HPE_Log_Tool.ViewModels
                             case "OUT_CheckSmartCard":
                                 {
                                     OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if (IsMissingTrans)
+                                    {
+                                        OUT_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                             case "OUT_CheckForceOpen":
                                 {
                                     OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if (IsMissingTrans)
+                                    {
+                                        OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                             case "OUT_CheckEtag":
                                 {
                                     OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if (IsMissingTrans)
+                                    {
+                                        OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                         }
@@ -566,16 +617,28 @@ namespace HPE_Log_Tool.ViewModels
                             case "OUT_CheckSmartCard":
                                 {
                                     OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if (IsMissingTrans)
+                                    {
+                                        OUT_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                             case "OUT_CheckForceOpen":
                                 {
                                     OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if (IsMissingTrans)
+                                    {
+                                        OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                             case "OUT_CheckEtag":
                                 {
                                     OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                                    if (IsMissingTrans)
+                                    {
+                                        OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
+                                    }
                                     break;
                                 }
                         }

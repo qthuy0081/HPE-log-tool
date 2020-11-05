@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,5 +34,57 @@ namespace HPE_Log_Tool.Common
             return shiftList;
 
         }
+        public static ObservableCollection<OUT_CheckSmartCard> filterMissingTrans_OutCheckSmartCard(ObservableCollection<OUT_CheckSmartCard> list, string conn)
+        {
+            ObservableCollection<OUT_CheckSmartCard> result = new ObservableCollection<OUT_CheckSmartCard>();
+            using(Model1 db = new Model1(conn))
+            {
+                foreach (OUT_CheckSmartCard trans in list)
+                {
+                    bool isMissing = db.OUT_CheckSmartCard.Any(r => trans.TransactionID == r.TransactionID);
+                    if (!isMissing)
+                    {
+                        result.Add(trans);
+                    }
+                }
+            }
+            
+            return result;
+        }
+        public static ObservableCollection<OUT_CheckForceOpen> filterMissingTrans_OUT_CheckForceOpen(ObservableCollection<OUT_CheckForceOpen> list, string conn)
+        {
+            ObservableCollection<OUT_CheckForceOpen> result = new ObservableCollection<OUT_CheckForceOpen>();
+            using (Model1 db = new Model1(conn))
+            {
+                foreach (OUT_CheckForceOpen trans in list)
+                {
+                    bool isMissing = db.OUT_CheckForceOpen.Any(r => trans.TransactionID == r.TransactionID);
+                    if (!isMissing)
+                    {
+                        result.Add(trans);
+                    }
+                }
+            }
+            return result;
+        }
+        public static ObservableCollection<OUT_CheckEtag> filterMissingTrans_OUT_CheckEtag(ObservableCollection<OUT_CheckEtag> list, string conn)
+        {
+            ObservableCollection<OUT_CheckEtag> result = new ObservableCollection<OUT_CheckEtag>();
+            using (Model1 db = new Model1(conn))
+            {
+                foreach (OUT_CheckEtag trans in list)
+                {
+                    bool isMissing = db.OUT_CheckSmartCard.Any(r => trans.OutCheckEtagID == r.OutCheckSmartCardID);
+                    if (!isMissing)
+                    {
+                        result.Add(trans);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
     }
 }

@@ -51,7 +51,7 @@
             <ComboBox Grid.Row="1" Grid.Column="4" ItemsSource="{Binding shiftList}" SelectedItem="{Binding Shift}" DisplayMemberPath="Name"></ComboBox>
             <Button  Grid.Row="3" Grid.Column="4" Width="150" Command="{Binding cmdReadLog}">Hiển thị tất cả</Button>
             <DatePicker Grid.Row="0" Grid.Column="4" Margin=" 0,2,0,2" SelectedDate="{Binding SelectedDate}"/>
-            <Button Grid.Row="2" Grid.Column="6" Width="120" >INSERT</Button>
+            <Button Grid.Row="2" Grid.Column="6" Width="120" Command="{Binding cmdInsertLog}">INSERT</Button>
 
         </Grid>
         <DataGrid Visibility="{Binding tCSC}" ItemsSource="{Binding OUT_CheckSmartCardsFiltered}" Margin="0,130,0,95.4"

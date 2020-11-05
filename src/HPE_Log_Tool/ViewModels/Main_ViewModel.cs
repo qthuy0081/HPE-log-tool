@@ -2,6 +2,7 @@
 using HPE_Log_Tool.Models;
 using HPE_Log_Tool.Views;
 using ITD_Review_license__plates.Common;
+using MoreLinq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ namespace HPE_Log_Tool.ViewModels
                 {
                     _isMissingTrans = value;
                     OnPropertyChanged();
-                    ChangeShift(Shift);
+                    ChangeShift();
                     
                 }
             }
@@ -134,6 +135,19 @@ namespace HPE_Log_Tool.ViewModels
                 if (_tCE != value)
                 {
                     _tCE = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private Visibility _tDup;
+        public Visibility tDup
+        {
+            get => _tDup;
+            set
+            {
+                if (_tDup != value)
+                {
+                    _tDup = value;
                     OnPropertyChanged();
                 }
             }
@@ -260,7 +274,7 @@ namespace HPE_Log_Tool.ViewModels
                 {
                     _shift = value;
                     OnPropertyChanged();
-                    ChangeShift(_shift);
+                    ChangeShift();
                 }
             }
         }
@@ -290,7 +304,7 @@ namespace HPE_Log_Tool.ViewModels
                     _selectedTable = value;
                     OnPropertyChanged();
                     ChangeTable(_selectedTable);
-                    ChangeShift(_shift);
+                    ChangeShift();
                 }
             }
         }
@@ -319,6 +333,21 @@ namespace HPE_Log_Tool.ViewModels
                 {
                     _selectedDate = value;
                     OnPropertyChanged();  
+                }
+            }
+        }
+        //IsCheckedBooleanProperty
+        private bool _IsCheckedBooleanProperty;
+        public bool IsCheckedBooleanProperty
+        {
+            get => _IsCheckedBooleanProperty;
+            set
+            {
+                if (_IsCheckedBooleanProperty != value)
+                {
+                    _IsCheckedBooleanProperty = value;
+                    OnPropertyChanged();
+                    ChangeShift();
                 }
             }
         }
@@ -491,9 +520,9 @@ namespace HPE_Log_Tool.ViewModels
         
 
         // Change shift
-        private void ChangeShift(LS_Shift shift)
+        private void ChangeShift()
         {
-            switch (shift.Name)
+            switch (Shift.Name)
             {
                 case "All":
                     {
@@ -509,6 +538,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckSmartCardsFiltered =  DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered,compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                             case "OUT_CheckForceOpen":
@@ -518,6 +548,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered,compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                             case "OUT_CheckEtag":
@@ -527,6 +558,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                         }
@@ -536,7 +568,7 @@ namespace HPE_Log_Tool.ViewModels
                 case "1":
                     {
                         // 6:30:00 to 11:29:59 
-                        startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));
+                        startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));          
                         endTime = SelectedDate.Add(new TimeSpan(11, 29, 59));
                         switch (SelectedTable)
                         {
@@ -547,6 +579,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                             case "OUT_CheckForceOpen":
@@ -556,6 +589,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                             case "OUT_CheckEtag":
@@ -565,6 +599,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                         }
@@ -584,6 +619,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                             case "OUT_CheckForceOpen":
@@ -593,6 +629,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                             case "OUT_CheckEtag":
@@ -602,6 +639,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                         }
@@ -621,6 +659,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                             case "OUT_CheckForceOpen":
@@ -630,6 +669,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                             case "OUT_CheckEtag":
@@ -639,6 +679,7 @@ namespace HPE_Log_Tool.ViewModels
                                     {
                                         OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
                                     }
+                                    DuplicatedSmartID(IsCheckedBooleanProperty);
                                     break;
                                 }
                         }
@@ -658,6 +699,7 @@ namespace HPE_Log_Tool.ViewModels
                         tCSC = Visibility.Visible;
                         tCFO = Visibility.Hidden;
                         tCE = Visibility.Hidden;
+                        tDup = Visibility.Visible;
                         break;
                     }
                 case "OUT_CheckForceOpen":
@@ -665,13 +707,16 @@ namespace HPE_Log_Tool.ViewModels
                         tCFO = Visibility.Visible;
                         tCSC = Visibility.Hidden;
                         tCE = Visibility.Hidden;
+                        tDup = Visibility.Hidden;
+                        IsCheckedBooleanProperty = false;
                         break;
                     }
                 case "OUT_CheckEtag":
                     {
                         tCE = Visibility.Visible;
                         tCSC = Visibility.Hidden;
-                        tCFO = Visibility.Hidden;
+                        tDup = Visibility.Hidden;
+                        IsCheckedBooleanProperty = false;
                         break;
                     }
             }
@@ -685,14 +730,22 @@ namespace HPE_Log_Tool.ViewModels
             InitialPasswordView ip = new InitialPasswordView();
             ip.ShowDialog();
         }
-        //Binding Shift
-        private void LoadShift()
+        private void DuplicatedSmartID(bool IsCheckedBooleanProperty)
         {
-            using (Model1 db = new Model1())
+            if(SelectedTable != "OUT_CheckSmartCard")
             {
-                shiftList = db.LS_Shift.ToList();
-            }
                 
+            }
+            if(IsCheckedBooleanProperty)
+            {
+                var dup = OUT_CheckSmartCardsFiltered.GroupBy(x => x.SmartCardID).Where(g => g.Count() > 1).Select(x => x.Key); //cai nay co thay doi outcheckfitered ko a// ko
+                var rs = OUT_CheckSmartCardsFiltered.Where(w => dup.Contains(w.SmartCardID)); //no ko cho viet linq voi distinct //nãy e làm groupby là lấy dc 2 th đó r, mà ko phải là object :(((
+                                                                                              //OUT_CheckSmartCardsFiltered = query as ObservableCollection<OUT_CheckSmartCard>;
+                var rs3 = rs.DistinctBy(w => w.SmartCardID).ToList();                                                                                  // lấy outcheck mà smartcard ko nằm trong tụi bị dup ko hiu khuc nay
+                OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(rs);                                                                                         // là chỉ lấy những th ko bị dup dung ko :< ừm, mà cũng chưa đúng
+                var rs1 = OUT_CheckSmartCardsFiltered.DistinctBy(w => w.SmartCardID).ToList();
+            }
+                                     
         }
         private void InsertLog()
         {
@@ -761,7 +814,8 @@ namespace HPE_Log_Tool.ViewModels
 
         private ICommand _cmdLoadConfig;
         public ICommand cmdLoadConfig => _cmdLoadConfig ?? (_cmdLoadConfig = new RelayCommand(param => { ShowConfig(); }, param => CanClick()));
-     
+        private ICommand _checkDup;
+        public ICommand checkDup => _checkDup ?? (_checkDup = new RelayCommand(param => { DuplicatedSmartID(IsCheckedBooleanProperty); }));
         #endregion
     }
 }

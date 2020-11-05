@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HPE_Log_Tool"
         mc:Ignorable="d"
         xmlns:uc="clr-namespace:HPE_Log_Tool.Views"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" Closed="Window_Closed">
+        Title="Log_Tool ITD" Height="450" Width="800" Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.InputBindings>
             <KeyBinding Key="F7" Command="{Binding cmdLoadConfig}"></KeyBinding>
         </Window.InputBindings>

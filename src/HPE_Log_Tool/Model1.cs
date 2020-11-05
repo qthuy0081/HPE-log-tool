@@ -11,7 +11,9 @@ namespace HPE_Log_Tool
             : base("name=Model1")
         {
         }
-
+        public Model1(string conn) : base(conn)
+        {
+        }
         public virtual DbSet<IN_CheckEtag> IN_CheckEtag { get; set; }
         public virtual DbSet<IN_CheckForceOpen> IN_CheckForceOpen { get; set; }
         public virtual DbSet<IN_CheckPrepaidCard> IN_CheckPrepaidCard { get; set; }

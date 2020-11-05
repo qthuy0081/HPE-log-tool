@@ -8,14 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
+
 namespace HPE_Log_Tool.Models
 {
+    [Serializable]
     public class AppConfig
     {
         public ConfigModel CompareDB;
         public ConfigModel InsertDB;
         private static string key_pass = "This_is_a_key__.";
-        private static readonly string configFile = "config2.xml";
+        private static readonly string configFile = "config.xml";
         private static readonly byte[] iv = new byte[16];
         [DataMember(EmitDefaultValue = false)]
         public string AuthenPassword { get; set; }
@@ -137,10 +139,11 @@ namespace HPE_Log_Tool.Models
         {
             try
             {
-                EncryptDbConfig(pConfigModel.CompareDB);
-                EncryptDbConfig(pConfigModel.InsertDB);
-                EncryptAuthenPass(pConfigModel);
-                string xml = Utility.Serialize<AppConfig>(pConfigModel);
+                AppConfig cloneConfig = Utility.DeepClone<AppConfig>(pConfigModel);
+                EncryptDbConfig(cloneConfig.CompareDB);
+                EncryptDbConfig(cloneConfig.InsertDB);
+                EncryptAuthenPass(cloneConfig);
+                string xml = Utility.Serialize<AppConfig>(cloneConfig);
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(xml);
                 xmlDoc.Save(configFile);

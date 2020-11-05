@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 namespace HPE_Log_Tool.Models
 {
+    [Serializable]
     public class ConfigModel
     {
         private static readonly string configFile = "config.xml";
@@ -136,10 +137,6 @@ namespace HPE_Log_Tool.Models
         {
             try
             {
-                if (string.IsNullOrEmpty(pConfigModel.SystemValue))
-                {
-                    pConfigModel.SystemValue = "UTE_QT_2020_11_8";
-                }
                 EncryptionConfig(pConfigModel);
                 string xml = Utility.Serialize<ConfigModel>(pConfigModel);
                 XmlDocument xmlDoc = new XmlDocument();

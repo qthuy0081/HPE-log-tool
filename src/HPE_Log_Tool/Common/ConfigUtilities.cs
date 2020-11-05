@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
@@ -12,7 +13,7 @@ using System.Xml.Serialization;
 
 namespace HPE_Log_Tool.Common
 {
-    public class Utility
+    public static class Utility
     {
 
         public static byte[] GetBytes(string stringBytes, char delimeter)
@@ -252,6 +253,17 @@ namespace HPE_Log_Tool.Common
             else
             {
                 MessageBox.Show("Folder does not exist");
+            }
+        }
+        public static T DeepClone<T>(this T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
             }
         }
         #region Encrypt Method

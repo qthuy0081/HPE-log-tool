@@ -1,4 +1,5 @@
-﻿using HPE_Log_Tool.Models;
+﻿using HPE_Log_Tool.Common;
+using HPE_Log_Tool.Models;
 using HPE_Log_Tool.Views;
 using ITD_Review_license__plates.Common;
 using System;
@@ -14,12 +15,15 @@ namespace HPE_Log_Tool.ViewModels
     public class Config_ViewModel : BaseViewModel
     {
         #region Props
-        string _password;
+        private string _password;
+        private string _oldPassword;
+        private string _newPassword;
+        private string _confirmPassword;
         private ObservableCollection<Station> _stations;
         private AppConfig _appConfig;
         private ConfigModel _compareDbConfig = new ConfigModel();
         private ConfigModel _insertDbConfig = new ConfigModel();
-       
+        
         public string Password
         {
             get => _password;
@@ -30,6 +34,41 @@ namespace HPE_Log_Tool.ViewModels
                     _password = value;
                     OnPropertyChanged();
                 }
+            }
+        }
+        public string OldPassword 
+        {
+            get => _oldPassword;
+            set
+            { 
+                if(_oldPassword != value)
+                {
+                    _oldPassword = value;
+                    OnPropertyChanged();
+
+                }
+            }
+        }
+
+        public string NewPassword 
+        {
+            get => _newPassword;
+            set
+            {
+                _newPassword = value;
+                OnPropertyChanged();
+            }
+        }
+        public string ConfirmPassword 
+        { 
+            get => _confirmPassword;
+            set
+            {
+                if(_confirmPassword != value)
+                {
+                    _confirmPassword = value;
+                    OnPropertyChanged();
+                }    
             }
         }
         public AppConfig Config
@@ -86,13 +125,14 @@ namespace HPE_Log_Tool.ViewModels
         public Config_ViewModel()
         {
             Config = AppConfig.LoadConfig();
-            CompareDbConfig = _appConfig.CompareDB;
-            InsertDbConfig = _appConfig.InsertDB;
+            CompareDbConfig = Utility.DeepClone<ConfigModel>(_appConfig.CompareDB); 
+            InsertDbConfig = Utility.DeepClone<ConfigModel>(_appConfig.InsertDB); 
             if (Config.AuthenPassword == null)
             {
                 Config.AuthenPassword = "ITD2020";
                 AppConfig.SaveConfig(Config);
             }
+
             Stations = new ObservableCollection<Station>
             {
                 new Station(0,"00","Trung Tâm"),
@@ -110,7 +150,11 @@ namespace HPE_Log_Tool.ViewModels
         #region Method
         private void saveConfig()
         {
-            bool ret = AppConfig.SaveConfig(_appConfig);
+            
+            _appConfig.InsertDB = InsertDbConfig;
+            _appConfig.CompareDB = CompareDbConfig;
+            bool ret = AppConfig.SaveConfig(Config);
+
             if(ret)
             {
                 MessageBox.Show("Save config successfully!");
@@ -132,11 +176,11 @@ namespace HPE_Log_Tool.ViewModels
             {
                 MessageBox.Show("Connect to Database failed");
             }
-
-
         }
         private bool CanClick()
         {
+            if(String.IsNullOrEmpty(NewPassword))
+               return false;
             return true;
         }
         private void verifyUser()
@@ -153,15 +197,35 @@ namespace HPE_Log_Tool.ViewModels
                 MessageBox.Show("Wrong password. Try again!");
             }
         }
+        private void changePassword()
+        {
+            if (OldPassword == Config.AuthenPassword && NewPassword == ConfirmPassword)
+            {
+                Config.AuthenPassword = NewPassword;
+                if (AppConfig.SaveConfig(_appConfig))
+                {
+                    MessageBox.Show("Change password successfully!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed");
+            }
+        }
+        
         #endregion
         #region Command
         private ICommand _saveConfigCmd;
-        public ICommand saveconfigCmd => _saveConfigCmd ?? (_saveConfigCmd = new RelayCommand(param => { saveConfig(); },p => CanClick()));
+        public ICommand saveconfigCmd => _saveConfigCmd ?? (_saveConfigCmd = new RelayCommand(param => { saveConfig(); }));
 
         private ICommand _checkDbConnectionCmd;
         public ICommand checkDbConnectionCmd => _checkDbConnectionCmd ?? (_checkDbConnectionCmd = new RelayCommand(param => { checkConnection(); }));
         private ICommand _loginCmd;
         public ICommand loginCmd => _loginCmd ?? (_loginCmd = new RelayCommand(param=> { verifyUser(); } ));
+
+        private ICommand _changePass;
+        public ICommand changePass => _changePass ?? (_changePass = new RelayCommand(param => { changePassword(); }, p => CanClick()));
+
         #endregion
     }
 }

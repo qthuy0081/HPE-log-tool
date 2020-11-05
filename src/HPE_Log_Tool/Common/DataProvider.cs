@@ -41,8 +41,8 @@ namespace HPE_Log_Tool.Common
             {
                 foreach (OUT_CheckSmartCard trans in list)
                 {
-                    bool isMissing = !db.OUT_CheckSmartCard.Any(r => trans.TransactionID == r.TransactionID);
-                    if (isMissing)
+                    bool isMissing = db.OUT_CheckSmartCard.Any(r => trans.TransactionID == r.TransactionID);
+                    if (!isMissing)
                     {
                         result.Add(trans);
                     }
@@ -58,14 +58,13 @@ namespace HPE_Log_Tool.Common
             {
                 foreach (OUT_CheckForceOpen trans in list)
                 {
-                    bool isMissing = !db.OUT_CheckSmartCard.Any(r => trans.TransactionID == r.TransactionID);
-                    if (isMissing)
+                    bool isMissing = db.OUT_CheckForceOpen.Any(r => trans.TransactionID == r.TransactionID);
+                    if (!isMissing)
                     {
                         result.Add(trans);
                     }
                 }
             }
-
             return result;
         }
         public static ObservableCollection<OUT_CheckEtag> filterMissingTrans_OUT_CheckEtag(ObservableCollection<OUT_CheckEtag> list, string conn)
@@ -75,8 +74,8 @@ namespace HPE_Log_Tool.Common
             {
                 foreach (OUT_CheckEtag trans in list)
                 {
-                    bool isMissing = !db.OUT_CheckSmartCard.Any(r => trans.OutCheckEtagID == r.OutCheckSmartCardID);
-                    if (isMissing)
+                    bool isMissing = db.OUT_CheckSmartCard.Any(r => trans.OutCheckEtagID == r.OutCheckSmartCardID);
+                    if (!isMissing)
                     {
                         result.Add(trans);
                     }

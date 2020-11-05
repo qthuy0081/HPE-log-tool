@@ -1,5 +1,7 @@
 ﻿using HPE_Log_Tool.Common;
+using HPE_Log_Tool.Models;
 using HPE_Log_Tool.Views;
+using ITD_Review_license__plates.Common;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,9 @@ namespace HPE_Log_Tool.ViewModels
         private string[] filePathss;
         private DateTime startTime;
         private DateTime endTime;
+        private AppConfig config;
+        string insertDbConn = "";
+        string compareDbConn = "";
         #endregion
 
         #region Properties
@@ -307,7 +312,10 @@ namespace HPE_Log_Tool.ViewModels
         #region Methods
         public Main_ViewModel()
         {
-            OUT_CheckSmartCards= new ObservableCollection<OUT_CheckSmartCard>();
+            config = AppConfig.LoadConfig();
+            insertDbConn = DbHelper.GetConnectionString(config.InsertDB.DatabaseServer, config.InsertDB.DatabaseName, config.InsertDB.DatabaseUser, config.InsertDB.DatabasePassword, config.InsertDB.DatabaseTimeout.ToString());
+            compareDbConn = DbHelper.GetConnectionString(config.CompareDB.DatabaseServer, config.CompareDB.DatabaseName, config.CompareDB.DatabaseUser, config.CompareDB.DatabasePassword, config.CompareDB.DatabaseTimeout.ToString());
+            OUT_CheckSmartCards = new ObservableCollection<OUT_CheckSmartCard>();
             OUT_CheckForceOpens = new ObservableCollection<OUT_CheckForceOpen>();
             OUT_CheckEtags = new ObservableCollection<OUT_CheckEtag>();
             OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>();

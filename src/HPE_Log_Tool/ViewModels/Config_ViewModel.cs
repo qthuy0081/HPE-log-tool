@@ -163,9 +163,9 @@ namespace HPE_Log_Tool.ViewModels
                 MessageBox.Show("Save config failed!");
             }   
         }
-        private void checkConnection()
+        private void checkConnection(ConfigModel config)
         {
-            string connectionString = DbHelper.GetConnectionString(CompareDbConfig.DatabaseServer, CompareDbConfig.DatabaseName, CompareDbConfig.DatabaseUser, CompareDbConfig.DatabasePassword, CompareDbConfig.DatabaseTimeout.ToString());
+            string connectionString = DbHelper.GetConnectionString(config.DatabaseServer, config.DatabaseName, config.DatabaseUser, config.DatabasePassword, config.DatabaseTimeout.ToString());
             DbHelper db = new DbHelper(connectionString);
             bool ret = db.CheckOpenConnection();
             if (ret)
@@ -218,14 +218,15 @@ namespace HPE_Log_Tool.ViewModels
         private ICommand _saveConfigCmd;
         public ICommand saveconfigCmd => _saveConfigCmd ?? (_saveConfigCmd = new RelayCommand(param => { saveConfig(); }));
 
-        private ICommand _checkDbConnectionCmd;
-        public ICommand checkDbConnectionCmd => _checkDbConnectionCmd ?? (_checkDbConnectionCmd = new RelayCommand(param => { checkConnection(); }));
+        private ICommand _checkCompareDbConnectionCmd;
+        public ICommand checkCompareDbConnectionCmd => _checkCompareDbConnectionCmd ?? (_checkCompareDbConnectionCmd = new RelayCommand(param => { checkConnection(CompareDbConfig); }));
+        private ICommand _checkInsertDbConnectionCmd;
+        public ICommand checkInsertDbConnectionCmd => _checkInsertDbConnectionCmd ?? (_checkInsertDbConnectionCmd = new RelayCommand(param => { checkConnection(InsertDbConfig); }));
         private ICommand _loginCmd;
         public ICommand loginCmd => _loginCmd ?? (_loginCmd = new RelayCommand(param=> { verifyUser(); } ));
 
         private ICommand _changePass;
         public ICommand changePass => _changePass ?? (_changePass = new RelayCommand(param => { changePassword(); }, p => CanClick()));
-
         #endregion
     }
 }

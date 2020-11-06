@@ -45,10 +45,10 @@
             <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right"  >Ngày</Label>
             <Label Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right">Ca</Label>
             <StackPanel Grid.Row="2" Grid.Column="4">
-                <CheckBox Grid.Row="2" Grid.Column="3" Margin=" 0,1,0,2" >Trùng Smart ID</CheckBox>
+                <CheckBox Grid.Row="2" Grid.Column="3" Margin=" 0,1,0,2" IsChecked="{Binding IsCheckedBooleanProperty}" Visibility="{Binding tDup}" >Trùng Smart ID</CheckBox>
                 <CheckBox IsChecked="{Binding IsMissingTrans}" Grid.Row="2" Grid.Column="3" Margin=" 0,1,0,2">Giao dịch chưa Insert</CheckBox>
             </StackPanel>
-            <ComboBox Grid.Row="1" Grid.Column="4" ItemsSource="{Binding shiftList}" SelectedItem="{Binding Shift}" DisplayMemberPath="Name"></ComboBox>
+            <ComboBox Grid.Row="1" Grid.Column="4" ItemsSource="{Binding shiftList}" SelectedItem="{Binding Shift}" DisplayMemberPath="Name"  ></ComboBox>
             <Button  Grid.Row="3" Grid.Column="4" Width="150" Command="{Binding cmdReadLog}">Hiển thị tất cả</Button>
             <DatePicker Grid.Row="0" Grid.Column="4" Margin=" 0,2,0,2" SelectedDate="{Binding SelectedDate}"/>
             <Button Grid.Row="2" Grid.Column="6" Width="120" Command="{Binding cmdInsertLog}">INSERT</Button>

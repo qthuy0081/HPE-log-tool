@@ -28,5 +28,6 @@ namespace HPE_Log_Tool.Views
             viewmodel = new Config_ViewModel();
             DataContext = viewmodel;
         }
+        
     }
 }

@@ -16,6 +16,8 @@ namespace HPE_Log_Tool.ViewModels
     {
         #region Props
         private string _password;
+        private Visibility _passwordVisibility;
+        private bool _IsPasswordUnmask;
         private string _oldPassword;
         private string _newPassword;
         private string _confirmPassword;
@@ -120,7 +122,46 @@ namespace HPE_Log_Tool.ViewModels
                     OnPropertyChanged();
                 }
             }
+
         }
+        public Visibility PasswordVisibility
+        {
+         
+        get => _passwordVisibility;
+            set
+            {
+                if (_passwordVisibility != value)
+                {   
+                    
+                    _passwordVisibility = value;
+                    OnPropertyChanged();
+                }
+            }
+
+        }
+        public bool IsPasswordUnmask
+        {
+
+            get => _IsPasswordUnmask;
+            set
+            {
+                if (_IsPasswordUnmask != value)
+                {
+                    _IsPasswordUnmask = value;
+                    OnPropertyChanged();
+                    if (_IsPasswordUnmask)
+                    {
+                        PasswordVisibility = Visibility.Visible;
+                    }    
+                    else
+                    {
+                        PasswordVisibility = Visibility.Collapsed;
+                    }    
+                }
+            }
+
+        }
+
         //Constructor
         public Config_ViewModel()
         {
@@ -132,7 +173,7 @@ namespace HPE_Log_Tool.ViewModels
                 Config.AuthenPassword = "ITD2020";
                 AppConfig.SaveConfig(Config);
             }
-
+            PasswordVisibility = Visibility.Hidden; 
             Stations = new ObservableCollection<Station>
             {
                 new Station(0,"00","Trung Tâm"),

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HPE_Log_Tool.Models;
+using ITD_Review_license__plates.Common;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
@@ -15,7 +17,9 @@ namespace HPE_Log_Tool.Common
             List<LS_Shift> shiftList = new List<LS_Shift>();
             try
             {
-                using (Model1 db = new Model1())
+                AppConfig config = AppConfig.LoadConfig();
+                string conn = DbHelper.GetConnectionString(config.CompareDB.DatabaseServer, config.CompareDB.DatabaseName, config.CompareDB.DatabaseUser, config.CompareDB.DatabasePassword, config.CompareDB.DatabaseTimeout.ToString());
+                using (Model1 db = new Model1(conn))
                 {
                     shiftList = db.LS_Shift.ToList();
                     if (isAll)

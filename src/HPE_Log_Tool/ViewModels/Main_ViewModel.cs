@@ -399,39 +399,56 @@ namespace HPE_Log_Tool.ViewModels
                 string url = @"\\{0}";
                 if (string.IsNullOrEmpty(IP))
                 {
-                    MessageBox.Show("IP address is empty");
-                    return;
-                }
-                bool rs = IPAddress.TryParse(IP, out IPAddress address); // chỗ này ko bị exception, nếu parse dc thì rs = true, address có kq
-                if (rs)
-                {
-                    Ping ping = new Ping();
-                    PingReply pong = ping.Send(address);
-                    if (pong.Status != IPStatus.Success)
+                    //MessageBox.Show("IP address is empty");
+                    //return;
+                    var fbd = new FolderBrowserDialog
+                    {                       
+                    };
+
+                    DialogResult result = fbd.ShowDialog();
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                     {
-                        MessageBox.Show("IP address does not exist");
-                    }
-                    else
-                    {                      
-                        var fbd = new FolderBrowserDialog
-                        {
-                            SelectedPath = string.Format(url, IP)
-                        };
-                        
-                        DialogResult result = fbd.ShowDialog();
-                        if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                        {
-                            //InsertTransaction_Log_20201020
-                             filePathss = Directory.GetFiles(fbd.SelectedPath).Where(w => w.Contains("InsertTransaction_Log_")).ToArray();
-                             Path = fbd.SelectedPath;
-                        }
+                        //InsertTransaction_Log_20201020
+
+                        filePathss = Directory.GetFiles(fbd.SelectedPath).Where(w => w.Contains("InsertTransaction_Log_")).ToArray();
+                        Path = fbd.SelectedPath;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Incorrect IP address");
+                    bool rs = IPAddress.TryParse(IP, out IPAddress address); // chỗ này ko bị exception, nếu parse dc thì rs = true, address có kq
+                    if (rs)
+                    {
+                        Ping ping = new Ping();
+                        PingReply pong = ping.Send(address);
+                        if (pong.Status != IPStatus.Success)
+                        {
+                            MessageBox.Show("IP address does not exist");
+                        }
+                        else
+                        {
+                            var fbd = new FolderBrowserDialog
+                            {
+                                SelectedPath = string.Format(url, IP)
+                            };
 
+                            DialogResult result = fbd.ShowDialog();
+                            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                            {
+                                //InsertTransaction_Log_20201020
+
+                                filePathss = Directory.GetFiles(fbd.SelectedPath).Where(w => w.Contains("InsertTransaction_Log_")).ToArray();
+                                Path = fbd.SelectedPath;
+                            }
+                        }
+                    }
                 }
+              
+                //else
+                //{
+                //    MessageBox.Show("Incorrect IP address");
+
+                //}
             }
             catch (Exception ex)
             {
@@ -522,6 +539,7 @@ namespace HPE_Log_Tool.ViewModels
         // Change shift
         private void ChangeShift()
         {
+            if(_shift != null)
             switch (Shift.Name)
             {
                 case "All":

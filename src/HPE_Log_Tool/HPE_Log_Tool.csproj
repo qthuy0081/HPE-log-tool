@@ -99,6 +99,9 @@
     <Compile Include="Views\InitialPasswordView.cs">
       <DependentUpon>InitialPasswordView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\InputActionView.xaml.cs">
+      <DependentUpon>InputActionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -119,6 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InitialPasswordView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InputActionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

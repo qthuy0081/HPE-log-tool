@@ -30,25 +30,25 @@
                             <RowDefinition Height="40"/>
 
                         </Grid.RowDefinitions>
-                        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Server" FontSize="15"/>
-                        <TextBox Text="{Binding InsertDbConfig.DatabaseServer}" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" FontSize="20"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Database Name" FontSize="15"/>
-                        <TextBox Text="{Binding InsertDbConfig.DatabaseName}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" FontSize="20"/>
+                        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Server" />
+                        <TextBox Height="25" Text="{Binding InsertDbConfig.DatabaseServer}" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Database Name" />
+                        <TextBox Height="25" Text="{Binding InsertDbConfig.DatabaseName}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" />
 
-                        <TextBlock HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="User Name" FontSize="15"/>
-                        <TextBox Text="{Binding InsertDbConfig.DatabaseUser}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" FontSize="20"/>
-                        <TextBlock HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Password" FontSize="15"/>
-                        <PasswordBox Height="30" x:Name="MyPasswordBox" w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding InsertDbConfig.DatabasePassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" FontSize="20"/>
-                        <TextBox Height="30"  Text="{Binding InsertDbConfig.DatabasePassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding PasswordVisibility}" Grid.Row="3" Grid.Column="2" />
-                        <CheckBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Content="Hiển thị mật khẩu" VerticalAlignment="Center" FontSize="16" IsChecked="{Binding IsPasswordUnmask}" Margin="4.4,9.8,4.4,10"/>
-                        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" Text="Timeout" FontSize="15"/>
-                        <TextBox Text="{Binding InsertDbConfig.DatabaseTimeout}" Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" FontSize="20"/>
-                        <TextBlock Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" Text="Action Password" FontSize="15"/>
-                        <PasswordBox w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding InsertDbConfig.CommandPassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="6" VerticalAlignment="Center" FontSize="20"/>
-                        <TextBlock HorizontalAlignment="Right" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" Text="StationID" FontSize="15"/>
-                        <ComboBox ItemsSource="{Binding Path=Stations}" DisplayMemberPath="Name" Grid.Row="2" Grid.Column="6" VerticalAlignment="Center" Text="Select" FontSize="20"/>
-                        <Button Command="{Binding checkInsertDbConnectionCmd}" Grid.Row="5" Grid.Column="4" Width="100" Height="30" Content="Kiểm Tra" FontSize="15"/>
-                        <Button Command="{Binding saveconfigCmd}" Grid.Row="5" Grid.Column="2" Width="160" Height="30" Content="Lưu" FontSize="15"/>
+                        <TextBlock HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="User Name" />
+                        <TextBox Height="25" Text="{Binding InsertDbConfig.DatabaseUser}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" />
+                        <TextBlock HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Password" />
+                        <PasswordBox Height="25" x:Name="MyPasswordBox" w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding InsertDbConfig.DatabasePassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" />
+                        <TextBox Height="25"  Text="{Binding InsertDbConfig.DatabasePassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding PasswordVisibility}" Grid.Row="3" Grid.Column="2" />
+                        <CheckBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Content="Hiển thị mật khẩu" VerticalAlignment="Center"  IsChecked="{Binding IsPasswordUnmask}" Margin="4.4,9.8,4.4,10"/>
+                        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" Text="Timeout" />
+                        <TextBox Height="25" Text="{Binding InsertDbConfig.DatabaseTimeout}" Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" Text="Action Password" />
+                        <PasswordBox Height="25" w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding InsertDbConfig.CommandPassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="6" VerticalAlignment="Center" />
+                        <TextBlock HorizontalAlignment="Right" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" Text="StationID" />
+                        <ComboBox Height="25" ItemsSource="{Binding Path=Stations}" DisplayMemberPath="Name" Grid.Row="2" Grid.Column="6" VerticalAlignment="Center" Text="Select" />
+                        <Button Command="{Binding checkInsertDbConnectionCmd}" Grid.Row="5" Grid.Column="4" Width="100" Height="30" Content="Kiểm Tra" />
+                        <Button Command="{Binding saveconfigCmd}" Grid.Row="5" Grid.Column="2" Width="160" Height="30" Content="Lưu" />
 
                     </Grid>
                 </Border>
@@ -80,21 +80,25 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Server" FontSize="15" Grid.ColumnSpan="3" Margin="0,10,4.4,10"/>
-                        <TextBox Text="{Binding CompareDbConfig.DatabaseServer}"  Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" FontSize="20" Grid.ColumnSpan="2" Margin="4.4,6,0.4,5"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Database Name" FontSize="15" Grid.ColumnSpan="3" Margin="0,10,4.4,10"/>
-                        <TextBox Text="{Binding CompareDbConfig.DatabaseName}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" FontSize="20" Grid.ColumnSpan="2" Margin="4.4,6,0.4,5"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="User Name" FontSize="15" Grid.ColumnSpan="3" Margin="0,10,4.4,10"/>
-                        <TextBox Text="{Binding CompareDbConfig.DatabaseUser}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" FontSize="20" Grid.ColumnSpan="2" Margin="4.4,6,0.4,5"/>
-                        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Password" FontSize="15" Grid.ColumnSpan="3" Margin="0,10,4.4,10"/>
-                        <PasswordBox w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding CompareDbConfig.DatabasePassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" FontSize="20" Grid.ColumnSpan="2" Margin="4.4,6,0.4,6"/>
-                        <CheckBox  Grid.Column="2" Grid.Row="4"  Content="Hiển thị mật khẩu" VerticalAlignment="Center" FontSize="16" Grid.ColumnSpan="2" Margin="4.4,10,0.4,10" />
-                        <TextBlock Grid.Row="0" Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Timeout" FontSize="15" Margin="0,10"/>
-                        <TextBox Text="{Binding CompareDbConfig.DatabaseTimeout}" Grid.Row="0" Grid.Column="7" VerticalAlignment="Center" FontSize="20" Margin="0.2,6,-0.2,5"/>
-                        <TextBlock Grid.Row="1" Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center" Text="StationID" FontSize="15" Margin="0,10"/>
-                        <ComboBox ItemsSource="{Binding Path=Stations}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="7" VerticalAlignment="Center" Text="Select" FontSize="20" Margin="0.2,4,-0.2,4"/>
-                        <Button Command="{Binding checkCompareDbConnectionCmd}" Grid.Row="5" Grid.Column="3" Height="30" Content="Kiểm Tra Kết Nối" FontSize="15" Margin="56.6,5,34.4,5"/>
-                        <Button Command="{Binding saveconfigCmd}" Grid.Row="5" Grid.Column="5" Width="100" Height="30" Content="Lưu" FontSize="15" Margin="0,5"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Server"  Grid.ColumnSpan="3" Margin="0,10,4.4,10"/>
+                        <TextBox Height="25" Text="{Binding CompareDbConfig.DatabaseServer}"  Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"  Grid.ColumnSpan="2" Margin="4.4,6,0.4,5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Database Name"  Grid.ColumnSpan="3" Margin="0,10,4.4,10"/>
+                        <TextBox Height="25" Text="{Binding CompareDbConfig.DatabaseName}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="4.4,6,0.4,5"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="User Name"  Grid.ColumnSpan="3" Margin="0,10,4.4,10"/>
+                        <TextBox Height="25" Text="{Binding CompareDbConfig.DatabaseUser}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"  Grid.ColumnSpan="2" Margin="4.4,6,0.4,5"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Password"  Grid.ColumnSpan="3" Margin="0,10,4.4,10"/>
+                        <!--<TextBox Margin="4.4,10,0.4,10"   Text="{Binding InsertDbConfig.DatabasePassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding PasswordVisibility}" Grid.Row="3" Grid.Column="3" />
+                        <PasswordBox Height="25" w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding CompareDbConfig.DatabasePassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center"  Grid.ColumnSpan="2" Margin="4.4,6,0.4,6"/>
+                        <CheckBox  IsChecked="{Binding IsPasswordUnmask}" Grid.Column="2" Grid.Row="4"  Content="Hiển thị mật khẩu" VerticalAlignment="Center"  Grid.ColumnSpan="2" Margin="4.4,10,0.4,10" />-->
+                        <PasswordBox  Height="25" x:Name="MyPasswordBox1" w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding CompareDbConfig.DatabasePassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" />
+                        <TextBox Height="25"  Text="{Binding CompareDbConfig.DatabasePassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding PasswordVisibility1}" Grid.Row="3" Grid.Column="3" />
+                        <CheckBox  Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Content="Hiển thị mật khẩu" VerticalAlignment="Center"  IsChecked="{Binding IsPasswordUnmask1}" Margin="4.4,9.8,4.4,10"/>
+                        <TextBlock Grid.Row="0" Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Timeout"  Margin="0,10"/>
+                        <TextBox Height="25" Text="{Binding CompareDbConfig.DatabaseTimeout}" Grid.Row="0" Grid.Column="7" VerticalAlignment="Center"  Margin="0.2,6,-0.2,5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center" Text="StationID"  Margin="0,10"/>
+                        <ComboBox Height="25" ItemsSource="{Binding Path=Stations}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="7" VerticalAlignment="Center" Text="Select"  Margin="0.2,4,-0.2,4"/>
+                        <Button Command="{Binding checkCompareDbConnectionCmd}" Grid.Row="5" Grid.Column="3" Height="30" Content="Kiểm Tra Kết Nối"  Margin="56.6,5,34.4,5"/>
+                        <Button Command="{Binding saveconfigCmd}" Grid.Row="5" Grid.Column="5" Width="100" Height="30" Content="Lưu"  Margin="0,5"/>
                     </Grid>
                 </Border>
             </StackPanel>
@@ -114,13 +118,16 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Mật khẩu cũ" FontSize="15"/>
-                <PasswordBox w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding OldPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="2" Width="400" Height="40" FontSize="20"/>
-                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Mật khẩu mới" FontSize="15"/>
-                <PasswordBox w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding NewPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="2" Width="400" Height="40" FontSize="20"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Xác nhận mật khẩu mới" FontSize="15"/>
-                <PasswordBox w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="2" Width="400" Height="40" FontSize="20"/>
-                <CheckBox Grid.Row="3" Grid.Column="0" Content="Hiển thị mật khẩu" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Mật khẩu cũ" />
+                <!--<PasswordBox w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding OldPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="2" Width="400" Height="25" />-->
+                <!--<CheckBox Grid.Row="3" Grid.Column="0" Content="Hiển thị mật khẩu" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>-->
+                <PasswordBox  Height="25" x:Name="MyPasswordBox2" w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding OldPassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Width="400" Grid.Row="0"  VerticalAlignment="Center" />
+                <TextBox Height="25"  Text="{Binding OldPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding PasswordVisibility2}" Width="400" Grid.Row="0" Grid.Column="2" />
+                <CheckBox  Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Hiển thị mật khẩu" VerticalAlignment="Center"  IsChecked="{Binding IsPasswordUnmask2}" Margin="4.4,9.8,4.4,10"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Mật khẩu mới" />
+                <PasswordBox w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding NewPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="2" Width="400" Height="25" />
+                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Xác nhận mật khẩu mới" />
+                <PasswordBox w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="2" Width="400" Height="25" />
                 <Button Command="{Binding changePass}" Grid.Row="3" Grid.Column="2" Height="40" Width="400" Content="Cập nhật" FontSize="20" ></Button>
             </Grid>
         </TabItem>

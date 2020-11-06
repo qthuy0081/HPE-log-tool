@@ -17,7 +17,11 @@ namespace HPE_Log_Tool.ViewModels
         #region Props
         private string _password;
         private Visibility _passwordVisibility;
+        private Visibility _passwordVisibility1;
+        private Visibility _passwordVisibility2;
         private bool _IsPasswordUnmask;
+        private bool _IsPasswordUnmask1;
+        private bool _IsPasswordUnmask2;
         private string _oldPassword;
         private string _newPassword;
         private string _confirmPassword;
@@ -139,6 +143,36 @@ namespace HPE_Log_Tool.ViewModels
             }
 
         }
+        public Visibility PasswordVisibility1
+        {
+
+            get => _passwordVisibility1;
+            set
+            {
+                if (_passwordVisibility1!= value)
+                {
+
+                    _passwordVisibility1 = value;
+                    OnPropertyChanged();
+                }
+            }
+
+        }
+        public Visibility PasswordVisibility2
+        {
+
+            get => _passwordVisibility2;
+            set
+            {
+                if (_passwordVisibility2 != value)
+                {
+
+                    _passwordVisibility2 = value;
+                    OnPropertyChanged();
+                }
+            }
+
+        }
         public bool IsPasswordUnmask
         {
 
@@ -161,6 +195,50 @@ namespace HPE_Log_Tool.ViewModels
             }
 
         }
+        public bool IsPasswordUnmask1
+        {
+
+            get => _IsPasswordUnmask1;
+            set
+            {
+                if (_IsPasswordUnmask1 != value)
+                {
+                    _IsPasswordUnmask1 = value;
+                    OnPropertyChanged();
+                    if (_IsPasswordUnmask1)
+                    {
+                        PasswordVisibility1 = Visibility.Visible;
+                    }
+                    else
+                    {
+                        PasswordVisibility1 = Visibility.Collapsed;
+                    }
+                }
+            }
+
+        }
+        public bool IsPasswordUnmask2
+        {
+
+            get => _IsPasswordUnmask2;
+            set
+            {
+                if (_IsPasswordUnmask2 != value)
+                {
+                    _IsPasswordUnmask2 = value;
+                    OnPropertyChanged();
+                    if (_IsPasswordUnmask2)
+                    {
+                        PasswordVisibility2 = Visibility.Visible;
+                    }
+                    else
+                    {
+                        PasswordVisibility2 = Visibility.Collapsed;
+                    }
+                }
+            }
+
+        }
 
         //Constructor
         public Config_ViewModel()
@@ -174,6 +252,8 @@ namespace HPE_Log_Tool.ViewModels
                 AppConfig.SaveConfig(Config);
             }
             PasswordVisibility = Visibility.Hidden; 
+            PasswordVisibility1 = Visibility.Hidden; 
+            PasswordVisibility2 = Visibility.Hidden; 
             Stations = new ObservableCollection<Station>
             {
                 new Station(0,"00","Trung Tâm"),

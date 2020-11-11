@@ -831,20 +831,22 @@ namespace HPE_Log_Tool.ViewModels
        
         private void DuplicatedSmartID(bool IsCheckedBooleanProperty)
         {
-            if(SelectedTable != "OUT_CheckSmartCard")
-            {
-                
-            }
             if(IsCheckedBooleanProperty)
             {
-                var dup = OUT_CheckSmartCardsFiltered.GroupBy(x => x.SmartCardID).Where(g => g.Count() > 1).Select(x => x.Key); //cai nay co thay doi outcheckfitered ko a// ko
-                var rs = OUT_CheckSmartCardsFiltered.Where(w => dup.Contains(w.SmartCardID)); //no ko cho viet linq voi distinct //nãy e làm groupby là lấy dc 2 th đó r, mà ko phải là object :(((
-                                                                                              //OUT_CheckSmartCardsFiltered = query as ObservableCollection<OUT_CheckSmartCard>;
-                var rs3 = rs.DistinctBy(w => w.SmartCardID).ToList();                                                                                  // lấy outcheck mà smartcard ko nằm trong tụi bị dup ko hiu khuc nay
-                OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(rs);                                                                                         // là chỉ lấy những th ko bị dup dung ko :< ừm, mà cũng chưa đúng
-                var rs1 = OUT_CheckSmartCardsFiltered.DistinctBy(w => w.SmartCardID).ToList();
-            }
-                                     
+                switch(SelectedTable)
+                {
+                    case "OUT_CheckSmartCard":
+                        var dup = OUT_CheckSmartCardsFiltered.GroupBy(x => x.SmartCardID).Where(g => g.Count() > 1).Select(x => x.Key);
+                        var rs = OUT_CheckSmartCardsFiltered.Where(w => dup.Contains(w.SmartCardID));
+                        OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(rs);
+                        break;
+                    case "IN_CheckSmartCard":
+                        var dup2 = IN_CheckSmartCardsFiltered.GroupBy(x => x.SmartCardID).Where(g => g.Count() > 1).Select(x => x.Key);
+                        var rs2 = IN_CheckSmartCardsFiltered.Where(w => dup2.Contains(w.SmartCardID));
+                        IN_CheckSmartCardsFiltered = new ObservableCollection<IN_CheckSmartCard>(rs2);
+                        break;
+                }                                                                           
+            }    
         }
         private void InsertLog()
         {

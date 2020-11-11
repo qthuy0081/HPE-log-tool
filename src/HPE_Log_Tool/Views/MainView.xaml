@@ -34,7 +34,7 @@
             <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" >Bảng</Label>
             <TextBox IsReadOnly="True" Grid.Row="0" Grid.Column="1" Margin=" 0,2,0,2"  ></TextBox>
             <Label  Grid.Row="3" Grid.Column="4" Margin=" 0,2,0,2"  >Tổng số dòng giao dịch:</Label>
-            <Label  Grid.Row="3" Grid.Column="4" Margin=" 131,2,0,2"  >0</Label>
+            <Label   Grid.Row="3" Grid.Column="4" Margin=" 131,2,0,2"  Content="{Binding RowCount}"></Label>
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding IP}" Margin=" 0,2,0,2" ></TextBox>
             <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
                 <ComboBox Margin="0,2,0,2.2" Width="219" HorizontalAlignment="Right" ItemsSource="{Binding tableList}" SelectedItem="{Binding SelectedTable}"/>

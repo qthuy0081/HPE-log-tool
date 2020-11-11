@@ -36,6 +36,7 @@ namespace HPE_Log_Tool.ViewModels
         private AppConfig config;
         string insertDbConn = "";
         string compareDbConn = "";
+        
 
         #endregion
 
@@ -69,7 +70,19 @@ namespace HPE_Log_Tool.ViewModels
                 }
             }
         }
-
+        private int _rowCount = 0;
+        public int RowCount
+        {
+            get => _rowCount;
+            set
+            {
+                if(_rowCount != value)
+                {
+                    _rowCount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         private bool _isMissingTrans;
         public bool IsMissingTrans
         {
@@ -660,6 +673,7 @@ namespace HPE_Log_Tool.ViewModels
             OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
             IN_CheckSmartCardsFiltered = new ObservableCollection<IN_CheckSmartCard>(from item in IN_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
             IN_CheckForceOpensFiltered = new ObservableCollection<IN_CheckForceOpen>(from item in IN_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+            CountLogRow();
         }
         
         private void FilterTransByTime()
@@ -759,6 +773,7 @@ namespace HPE_Log_Tool.ViewModels
                         break;
                     }
             }
+            CountLogRow();
         }
 
         // Bind datagrid by table 
@@ -820,10 +835,31 @@ namespace HPE_Log_Tool.ViewModels
                         break;
                     }
             }
+            CountLogRow();
             
         }
 
-
+        private void CountLogRow()
+        {
+            switch(SelectedTable)
+            {
+                case "OUT_CheckSmartCard":
+                    RowCount = OUT_CheckSmartCardsFiltered.Count;
+                    break;
+                case "OUT_CheckForceOpen":
+                    RowCount = OUT_CheckForceOpensFiltered.Count;
+                    break;
+                case "OUT_CheckEtag":
+                    RowCount = OUT_CheckEtagsFiltered.Count;
+                    break;
+                case "IN_CheckSmartCard":
+                    RowCount = IN_CheckSmartCardsFiltered.Count;
+                    break;
+                case "IN_CheckForceOpen":
+                    RowCount = IN_CheckForceOpensFiltered.Count;
+                    break;
+            }
+        }
         // Load Config Form
        
         private void DuplicatedSmartID(bool IsCheckedBooleanProperty)
@@ -905,6 +941,7 @@ namespace HPE_Log_Tool.ViewModels
                             OUT_CheckForceOpensFiltered.Clear();
                             IN_CheckSmartCardsFiltered.Clear();
                             IN_CheckForceOpensFiltered.Clear();
+                            CountLogRow();
                             MessageBox.Show("Thêm dữ liệu thành công!");
                         }
                     }

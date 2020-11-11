@@ -311,7 +311,7 @@ namespace HPE_Log_Tool.ViewModels
             {
                 CloseWindow();
                 ConfigView view = new ConfigView();
-                view.Show();
+                view.ShowDialog();
             }
             else
             {

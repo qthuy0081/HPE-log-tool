@@ -743,11 +743,7 @@ namespace HPE_Log_Tool.ViewModels
 
 
         // Load Config Form
-        private void ShowConfig()
-        {
-            InitialPasswordView ip = new InitialPasswordView();
-            ip.ShowDialog();
-        }
+       
         private void DuplicatedSmartID(bool IsCheckedBooleanProperty)
         {
             if(SelectedTable != "OUT_CheckSmartCard")
@@ -767,54 +763,62 @@ namespace HPE_Log_Tool.ViewModels
         }
         private void InsertLog()
         {
-            // Nếu chưa filter thì ko cho insert
-             
-            try
+            ActionView view = new ActionView();
+
+            if (view.ShowDialog() == true)
             {
-                using (Model1 db = new Model1(insertDbConn))
+                try
                 {
-                    switch(SelectedTable)
+                    using (Model1 db = new Model1(insertDbConn))
                     {
-                        case "OUT_CheckSmartCard":
-                            {
-                                if (OUT_CheckSmartCardsFiltered.Count < 1)
-                                    MessageBox.Show("Không có dữ liệu để thêm!");
-                                else
-                                db.OUT_CheckSmartCard.AddRange(OUT_CheckSmartCardsFiltered);
-                                break;
-                            }
-                        case "OUT_CheckForceOpen":
-                            {
-                                if (OUT_CheckForceOpensFiltered.Count < 1)
-                                    MessageBox.Show("Không có dữ liệu để thêm!");
-                                else
-                                    db.OUT_CheckForceOpen.AddRange(OUT_CheckForceOpensFiltered);
-                                break;
-                            }
-                        case "OUT_CheckEtag":
-                            {
-                                if (OUT_CheckEtagsFiltered.Count < 1)
-                                    MessageBox.Show("Không có dữ liệu để thêm!");
-                                else
-                                    db.OUT_CheckEtag.AddRange(OUT_CheckEtagsFiltered);
-                                break;
-                            }
-                    }
-                    if (db.SaveChanges() > 0)
-                    {
-                        OUT_CheckSmartCardsFiltered.Clear();
-                        OUT_CheckEtagsFiltered.Clear();
-                        OUT_CheckForceOpensFiltered.Clear();
-                        MessageBox.Show("Thêm dữ liệu thành công!");
+                        switch (SelectedTable)
+                        {
+                            case "OUT_CheckSmartCard":
+                                {
+                                    if (OUT_CheckSmartCardsFiltered.Count < 1)
+                                        MessageBox.Show("Không có dữ liệu để thêm!");
+                                    else
+                                        db.OUT_CheckSmartCard.AddRange(OUT_CheckSmartCardsFiltered);
+                                    break;
+                                }
+                            case "OUT_CheckForceOpen":
+                                {
+                                    if (OUT_CheckForceOpensFiltered.Count < 1)
+                                        MessageBox.Show("Không có dữ liệu để thêm!");
+                                    else
+                                        db.OUT_CheckForceOpen.AddRange(OUT_CheckForceOpensFiltered);
+                                    break;
+                                }
+                            case "OUT_CheckEtag":
+                                {
+                                    if (OUT_CheckEtagsFiltered.Count < 1)
+                                        MessageBox.Show("Không có dữ liệu để thêm!");
+                                    else
+                                        db.OUT_CheckEtag.AddRange(OUT_CheckEtagsFiltered);
+                                    break;
+                                }
+                        }
+                        if (db.SaveChanges() > 0)
+                        {
+                            OUT_CheckSmartCardsFiltered.Clear();
+                            OUT_CheckEtagsFiltered.Clear();
+                            OUT_CheckForceOpensFiltered.Clear();
+                            MessageBox.Show("Thêm dữ liệu thành công!");
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Thêm dữ liệu thất bại!, Lỗi: " + ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Thêm dữ liệu thất bại!, Lỗi: " + ex.Message);
+                MessageBox.Show("insert fail");
             }
-            
+
         }
+        
         #endregion
 
         #region Commands
@@ -830,8 +834,6 @@ namespace HPE_Log_Tool.ViewModels
         private ICommand _cmdBrowse;
         public ICommand cmdBrowse => _cmdBrowse ?? (_cmdBrowse = new RelayCommand(param => { Browse(); }, param => CanBrowse()));
 
-        private ICommand _cmdLoadConfig;
-        public ICommand cmdLoadConfig => _cmdLoadConfig ?? (_cmdLoadConfig = new RelayCommand(param => { ShowConfig(); }, param => CanClick()));
         private ICommand _checkDup;
         public ICommand checkDup => _checkDup ?? (_checkDup = new RelayCommand(param => { DuplicatedSmartID(IsCheckedBooleanProperty); }));
         #endregion

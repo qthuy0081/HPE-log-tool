@@ -21,7 +21,8 @@ namespace HPE_Log_Tool.Views
     /// </summary>
     public partial class InitialPasswordView : Window
     {
-        Config_ViewModel viewmodel;
+        private Config_ViewModel viewmodel;
+        
         public InitialPasswordView()
         {
             InitializeComponent();
@@ -38,6 +39,5 @@ namespace HPE_Log_Tool.Views
                 this.Close();
            }
         }
-
     }
 }

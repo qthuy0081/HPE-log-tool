@@ -31,7 +31,6 @@ namespace HPE_Log_Tool.ViewModels
         private const string fileNameIN = "\\LogFolder\\InsertTransaction_Log_";
         private const string fileNameOUT = "\\Logs\\TraceLog_";
         private const string fileExt = ".txt";
-        private string[] filePathss;
         private DateTime startTime;
         private DateTime endTime;
         private AppConfig config;
@@ -472,6 +471,7 @@ namespace HPE_Log_Tool.ViewModels
             Shift = shiftList.FirstOrDefault();
             SelectedTable = tableList.FirstOrDefault();
             SelectedDate = new DateTime(2020, 10, 20);
+            Path = "\\TLS";
         }
 
 
@@ -506,8 +506,6 @@ namespace HPE_Log_Tool.ViewModels
                     if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                     {
                         //InsertTransaction_Log_20201020
-
-                        filePathss = Directory.GetFiles(fbd.SelectedPath).Where(w => w.Contains("InsertTransaction_Log_")).ToArray();
                         Path = fbd.SelectedPath;
                     }
                 }
@@ -534,7 +532,6 @@ namespace HPE_Log_Tool.ViewModels
                             {
                                 //InsertTransaction_Log_20201020
 
-                                filePathss = Directory.GetFiles(fbd.SelectedPath).Where(w => w.Contains("InsertTransaction_Log_")).ToArray();
                                 Path = fbd.SelectedPath;
                             }
                         }
@@ -573,10 +570,10 @@ namespace HPE_Log_Tool.ViewModels
         {
             // Giờ có sẵn 1 list path của các fileLog đó rồi nè
             // Xong từ ngày cái mình lấy ra cái đuôi rồi lấy cái file tương ứng theo ngày đó (Ex: 20/10/2020 -> InsertTransaction_Log_20201020)
-            string currentOutDate = Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
-            string tomorrowOutDate = Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
-            string currentInDate = Path + fileNameIN + toDateStamp(SelectedDate) + fileExt;
-            string tomorrowInDate = Path + fileNameIN + toDateStamp(SelectedDate.AddDays(1)) + fileExt;
+            string currentOutDate = @"\\" + IP + Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
+            string tomorrowOutDate = @"\\" + IP + Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
+            string currentInDate = @"\\" + IP + Path + fileNameIN + toDateStamp(SelectedDate) + fileExt;
+            string tomorrowInDate = @"\\" + IP + Path + fileNameIN + toDateStamp(SelectedDate.AddDays(1)) + fileExt;
             string[] lines;
             int startIndex;
             int endIndex;
@@ -675,8 +672,7 @@ namespace HPE_Log_Tool.ViewModels
                         IN_CheckSmartCardsFiltered = new ObservableCollection<IN_CheckSmartCard>(from item in IN_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
-                            // Sửa khúc này nè Thuỵ
-                            //IN_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_InCheckSmartCard(IN_CheckSmartCardsFiltered, compareDbConn);
+                            IN_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_InCheckSmartCard(IN_CheckSmartCardsFiltered, compareDbConn);
                         }
                         DuplicatedSmartID(IsCheckedBooleanProperty);
                         break;
@@ -686,8 +682,7 @@ namespace HPE_Log_Tool.ViewModels
                         IN_CheckForceOpensFiltered = new ObservableCollection<IN_CheckForceOpen>(from item in IN_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
-                            // Sửa khúc này nè Thuỵ
-                            //IN_CheckForceOpensFiltered = DataProvider.filterMissingTrans_InCheckForceOpen(IN_CheckForceOpensFiltered, compareDbConn);
+                            IN_CheckForceOpensFiltered = DataProvider.filterMissingTrans_InCheckForceOpen(IN_CheckForceOpensFiltered, compareDbConn);
                         }
                         DuplicatedSmartID(IsCheckedBooleanProperty);
                         break;
@@ -860,6 +855,22 @@ namespace HPE_Log_Tool.ViewModels
                     {
                         switch (SelectedTable)
                         {
+                            case "IN_CheckSmartCard":
+                                {
+                                    if (IN_CheckSmartCardsFiltered.Count < 1)
+                                        MessageBox.Show("Không có dữ liệu để thêm!");
+                                    else
+                                        db.IN_CheckSmartCard.AddRange(IN_CheckSmartCardsFiltered);
+                                    break;
+                                }
+                            case "IN_CheckForceOpen":
+                                {
+                                    if (IN_CheckForceOpensFiltered.Count < 1)
+                                        MessageBox.Show("Không có dữ liệu để thêm!");
+                                    else
+                                        db.IN_CheckForceOpen.AddRange(IN_CheckForceOpensFiltered);
+                                    break;
+                                }
                             case "OUT_CheckSmartCard":
                                 {
                                     if (OUT_CheckSmartCardsFiltered.Count < 1)
@@ -890,6 +901,8 @@ namespace HPE_Log_Tool.ViewModels
                             OUT_CheckSmartCardsFiltered.Clear();
                             OUT_CheckEtagsFiltered.Clear();
                             OUT_CheckForceOpensFiltered.Clear();
+                            IN_CheckSmartCardsFiltered.Clear();
+                            IN_CheckForceOpensFiltered.Clear();
                             MessageBox.Show("Thêm dữ liệu thành công!");
                         }
                     }
@@ -901,7 +914,7 @@ namespace HPE_Log_Tool.ViewModels
             }
             else
             {
-                MessageBox.Show("insert fail");
+                MessageBox.Show("Thêm dữ liệu không thành công, vui lòng thử lại!");
             }
 
         }

@@ -675,8 +675,7 @@ namespace HPE_Log_Tool.ViewModels
                         IN_CheckSmartCardsFiltered = new ObservableCollection<IN_CheckSmartCard>(from item in IN_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
-                            // Sửa khúc này nè Thuỵ
-                            //IN_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_InCheckSmartCard(IN_CheckSmartCardsFiltered, compareDbConn);
+                            IN_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_InCheckSmartCard(IN_CheckSmartCardsFiltered, compareDbConn);
                         }
                         DuplicatedSmartID(IsCheckedBooleanProperty);
                         break;
@@ -686,8 +685,7 @@ namespace HPE_Log_Tool.ViewModels
                         IN_CheckForceOpensFiltered = new ObservableCollection<IN_CheckForceOpen>(from item in IN_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
-                            // Sửa khúc này nè Thuỵ
-                            //IN_CheckForceOpensFiltered = DataProvider.filterMissingTrans_InCheckForceOpen(IN_CheckForceOpensFiltered, compareDbConn);
+                            IN_CheckForceOpensFiltered = DataProvider.filterMissingTrans_InCheckForceOpen(IN_CheckForceOpensFiltered, compareDbConn);
                         }
                         DuplicatedSmartID(IsCheckedBooleanProperty);
                         break;

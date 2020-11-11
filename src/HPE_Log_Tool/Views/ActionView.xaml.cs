@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPE_Log_Tool.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,25 @@ namespace HPE_Log_Tool.Views
     /// <summary>
     /// Interaction logic for ActionView.xaml
     /// </summary>
+   
     public partial class ActionView : Window
     {
+        private ActionPasswordViewModel viewmodel;
         public ActionView()
         {
             InitializeComponent();
+            viewmodel = new ActionPasswordViewModel();
+            viewmodel.CloseWindowRequest += closeWindow;
+            DataContext = viewmodel;
+        }
+        private void closeWindow()
+        {
+            if(viewmodel != null)
+            {
+                viewmodel.Dispose();
+                this.DialogResult = true;
+                this.Close();
+            }
         }
     }
 }

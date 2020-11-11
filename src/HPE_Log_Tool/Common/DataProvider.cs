@@ -88,6 +88,40 @@ namespace HPE_Log_Tool.Common
 
             return result;
         }
+        public static ObservableCollection<IN_CheckSmartCard> filterMissingTrans_InCheckSmartCard(ObservableCollection<IN_CheckSmartCard> list, string conn)
+        {
+            ObservableCollection<IN_CheckSmartCard> result = new ObservableCollection<IN_CheckSmartCard>();
+            using (Model1 db = new Model1(conn))
+            {
+                foreach (IN_CheckSmartCard trans in list)
+                {
+                    bool isMissing = db.IN_CheckSmartCard.Any(r => trans.TransactionID == r.TransactionID);
+                    if (!isMissing)
+                    {
+                        result.Add(trans);
+                    }
+                }
+            }
+
+            return result;
+        }
+        public static ObservableCollection<IN_CheckForceOpen> filterMissingTrans_InCheckForceOpen(ObservableCollection<IN_CheckForceOpen> list, string conn)
+        {
+            ObservableCollection<IN_CheckForceOpen> result = new ObservableCollection<IN_CheckForceOpen>();
+            using (Model1 db = new Model1(conn))
+            {
+                foreach (IN_CheckForceOpen trans in list)
+                {
+                    bool isMissing = db.IN_CheckForceOpen.Any(r => trans.TransactionID == r.TransactionID);
+                    if (!isMissing)
+                    {
+                        result.Add(trans);
+                    }
+                }
+            }
+
+            return result;
+        }
 
 
     }

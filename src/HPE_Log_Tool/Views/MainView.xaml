@@ -351,7 +351,7 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Visibility="{Binding tCE}" ItemsSource="{Binding OUT_CheckEtagsFiltered}" Margin="0,167,0,95.4"
+        <DataGrid Visibility="{Binding tICS}" ItemsSource="{Binding IN_CheckSmartCardsFiltered}" Margin="0,167,0,95.4"
                AutoGenerateColumns="False"   CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="TransactionID" Binding="{Binding TransactionID}" Width="80*">
@@ -449,7 +449,7 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Visibility="{Binding tCE}" ItemsSource="{Binding OUT_CheckEtagsFiltered}" Margin="0,167,0,95.4"
+        <DataGrid Visibility="{Binding tICFO}" ItemsSource="{Binding IN_CheckForceOpensFiltered}" Margin="0,167,0,95.4"
                AutoGenerateColumns="False"   CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="TransactionID" Binding="{Binding TransactionID}" Width="80*">

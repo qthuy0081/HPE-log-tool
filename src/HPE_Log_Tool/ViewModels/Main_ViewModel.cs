@@ -385,7 +385,7 @@ namespace HPE_Log_Tool.ViewModels
 
         private void Check()
         {
-            Utility.checkExist(Path);
+            Utility.checkExist(Path, IP);
         }
         private bool CanBrowse()
         {

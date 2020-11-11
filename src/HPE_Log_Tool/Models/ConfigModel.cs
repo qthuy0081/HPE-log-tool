@@ -14,6 +14,7 @@ namespace HPE_Log_Tool.Models
     {
         private static readonly string configFile = "config.xml";
         private static readonly byte[] iv = new byte[16];
+        
 
         #region Database
 

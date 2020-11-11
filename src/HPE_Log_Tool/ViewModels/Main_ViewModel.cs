@@ -52,7 +52,9 @@ namespace HPE_Log_Tool.ViewModels
                 if (_ip != value)
                 {
                     _ip = value;
+                    Path = $"\\\\{IP}{AppConfig.path}" ;
                     OnPropertyChanged();
+                    
                 }
             }
         }
@@ -71,6 +73,7 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
         private int _rowCount = 0;
+        
         public int RowCount
         {
             get => _rowCount;
@@ -79,6 +82,20 @@ namespace HPE_Log_Tool.ViewModels
                 if(_rowCount != value)
                 {
                     _rowCount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _timeOff = 30;
+        public int Timeoff
+        {
+            get => _timeOff;
+            set
+            {
+                if (_timeOff != value)
+                {
+                    _timeOff = value;
                     OnPropertyChanged();
                 }
             }
@@ -676,14 +693,14 @@ namespace HPE_Log_Tool.ViewModels
             CountLogRow();
         }
         
-        private void FilterTransByTime()
+        private void FilterTransByTime(int shift = 0)
         {
             switch (SelectedTable)
             {
                 // IN_Check Section
                 case "IN_CheckSmartCard":
                     {
-                        IN_CheckSmartCardsFiltered = new ObservableCollection<IN_CheckSmartCard>(from item in IN_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                        IN_CheckSmartCardsFiltered = new ObservableCollection<IN_CheckSmartCard>(from item in IN_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
                             IN_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_InCheckSmartCard(IN_CheckSmartCardsFiltered, compareDbConn);
@@ -693,7 +710,7 @@ namespace HPE_Log_Tool.ViewModels
                     }
                 case "IN_CheckForceOpen":
                     {
-                        IN_CheckForceOpensFiltered = new ObservableCollection<IN_CheckForceOpen>(from item in IN_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                        IN_CheckForceOpensFiltered = new ObservableCollection<IN_CheckForceOpen>(from item in IN_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
                             IN_CheckForceOpensFiltered = DataProvider.filterMissingTrans_InCheckForceOpen(IN_CheckForceOpensFiltered, compareDbConn);
@@ -703,7 +720,7 @@ namespace HPE_Log_Tool.ViewModels
                     }
                 case "OUT_CheckSmartCard":
                     {
-                        OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                        OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
                             OUT_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered, compareDbConn);
@@ -713,7 +730,7 @@ namespace HPE_Log_Tool.ViewModels
                     }
                 case "OUT_CheckForceOpen":
                     {
-                        OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                        OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
                             OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, compareDbConn);
@@ -723,7 +740,7 @@ namespace HPE_Log_Tool.ViewModels
                     }
                 case "OUT_CheckEtag":
                     {
-                        OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
+                        OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
                             OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
@@ -737,14 +754,16 @@ namespace HPE_Log_Tool.ViewModels
         // Change shift
         private void ChangeShift()
         {
+            
             if(_shift != null)
             switch (Shift.Name)
             {
+               
                 case "All":
                     {
                         // 6:30:00 today -> 6:30:00 tomorrow
                         startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));
-                        endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59));
+                        endTime = startTime.AddDays(1).AddMinutes(Timeoff);
                         FilterTransByTime();
                         break;
                     }
@@ -752,24 +771,24 @@ namespace HPE_Log_Tool.ViewModels
                     {
                         // 6:30:00 to 11:29:59 
                         startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));          
-                        endTime = SelectedDate.Add(new TimeSpan(11, 29, 59));
-                        FilterTransByTime();
+                        endTime = SelectedDate.Add(new TimeSpan(11, 29, 59)).AddMinutes(Timeoff);
+                        FilterTransByTime(1);
                         break;
                     }
                 case "2":
                     {
                         // 11:30:00 to 17:59:59
                         startTime = SelectedDate.Add(new TimeSpan(11, 30, 00));
-                        endTime = SelectedDate.Add(new TimeSpan(17, 59, 59));
-                        FilterTransByTime();
+                        endTime = SelectedDate.Add(new TimeSpan(17, 59, 59)).AddMinutes(Timeoff);
+                        FilterTransByTime(2);
                         break;
                     }
                 case "3":
                     {
                         // 18:00:00 today -> 6:29:59 tomorrow
                         startTime = SelectedDate.Add(new TimeSpan(18, 00, 00));
-                        endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59));
-                        FilterTransByTime();
+                        endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59)).AddMinutes(Timeoff);
+                        FilterTransByTime(3);
                         break;
                     }
             }

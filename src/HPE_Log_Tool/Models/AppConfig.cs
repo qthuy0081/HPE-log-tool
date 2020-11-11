@@ -19,6 +19,9 @@ namespace HPE_Log_Tool.Models
         private static string key_pass = "This_is_a_key__.";
         private static readonly string configFile = "config.xml";
         private static readonly byte[] iv = new byte[16];
+        public static string path = @"\TLS_ETC";
+        
+
         [DataMember(EmitDefaultValue = false)]
         public string AuthenPassword { get; set; }
         public static AppConfig LoadConfig()

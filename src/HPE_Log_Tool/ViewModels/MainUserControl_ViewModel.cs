@@ -20,7 +20,7 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace HPE_Log_Tool.ViewModels
 {
-    public class Main_ViewModel : BaseViewModel
+    public class MainUserControl_ViewModel : BaseViewModel
     {
         #region Fields
         private const string isOutCheckSmartCard = "WriteLogPrepareCommitReceipt - OUT_CheckSmartCard";
@@ -116,8 +116,8 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
-        private Main_ViewModel _SelectedItem;
-        public Main_ViewModel SelectedItem
+        private MainUserControl_ViewModel _SelectedItem;
+        public MainUserControl_ViewModel SelectedItem
         {
             get => _SelectedItem;
             set
@@ -474,7 +474,7 @@ namespace HPE_Log_Tool.ViewModels
         #endregion
 
         #region Methods
-        public Main_ViewModel()
+        public MainUserControl_ViewModel()
         {
             config = AppConfig.LoadConfig();
             insertDbConn = DbHelper.GetConnectionString(config.InsertDB.DatabaseServer, config.InsertDB.DatabaseName, config.InsertDB.DatabaseUser, config.InsertDB.DatabasePassword, config.InsertDB.DatabaseTimeout.ToString());

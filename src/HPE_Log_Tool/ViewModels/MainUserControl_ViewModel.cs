@@ -501,7 +501,7 @@ namespace HPE_Log_Tool.ViewModels
             Shift = shiftList.FirstOrDefault();
             SelectedTable = tableList.FirstOrDefault();
             SelectedDate = new DateTime(2020, 10, 20);
-            Path = "\\TLS";
+            Path = AppConfig.path;
         }
 
 
@@ -512,7 +512,7 @@ namespace HPE_Log_Tool.ViewModels
 
         private void Check()
         {
-            Utility.checkExist(Path, IP);
+            Utility.checkExist(Path);
         }
         private bool CanBrowse()
         {
@@ -600,10 +600,10 @@ namespace HPE_Log_Tool.ViewModels
         {
             // Giờ có sẵn 1 list path của các fileLog đó rồi nè
             // Xong từ ngày cái mình lấy ra cái đuôi rồi lấy cái file tương ứng theo ngày đó (Ex: 20/10/2020 -> InsertTransaction_Log_20201020)
-            string currentOutDate = @"\\" + IP + Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
-            string tomorrowOutDate = @"\\" + IP + Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
-            string currentInDate = @"\\" + IP + Path + fileNameIN + toDateStamp(SelectedDate) + fileExt;
-            string tomorrowInDate = @"\\" + IP + Path + fileNameIN + toDateStamp(SelectedDate.AddDays(1)) + fileExt;
+            string currentOutDate = Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
+            string tomorrowOutDate =Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
+            string currentInDate = Path + fileNameIN + toDateStamp(SelectedDate) + fileExt;
+            string tomorrowInDate = Path + fileNameIN + toDateStamp(SelectedDate.AddDays(1)) + fileExt;
             string[] lines;
             int startIndex;
             int endIndex;
@@ -915,7 +915,7 @@ namespace HPE_Log_Tool.ViewModels
                 }
                 try
                 {
-                    using (Model1 db = new Model1(insertDbConn))
+                    using (Model1 db = new Model1(compareDbConn))
                     {
                         switch (SelectedTable)
                         {
@@ -974,7 +974,7 @@ namespace HPE_Log_Tool.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Thêm dữ liệu thất bại!, Lỗi: " + ex.Message);
+                    MessageBox.Show(ex.ToString());
                 }
             }
             else

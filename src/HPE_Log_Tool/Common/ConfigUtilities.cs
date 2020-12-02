@@ -242,11 +242,10 @@ namespace HPE_Log_Tool.Common
                 array[index]++;
             }
         }
-        public static void checkExist(string path, string ip)
+        public static void checkExist(string path)
         {
-            string url = @"\\{0}\{1}";
-            string fullPath = string.Format(url, ip, path);
-            if (Directory.Exists(fullPath))
+            
+            if (Directory.Exists(path))
             {
                 MessageBox.Show("Folder exist");
             }

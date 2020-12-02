@@ -30,7 +30,7 @@
                             <RowDefinition Height="40"/>
 
                         </Grid.RowDefinitions>
-                        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Server" />
+                        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="IP" />
                         <TextBox Height="25" Text="{Binding InsertDbConfig.DatabaseServer}" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" />
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Database Name" />
                         <TextBox Height="25" Text="{Binding InsertDbConfig.DatabaseName}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" />

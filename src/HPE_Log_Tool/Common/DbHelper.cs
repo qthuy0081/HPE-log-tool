@@ -12,7 +12,7 @@ namespace ITD_Review_license__plates.Common
 
         private const string CONN_STRING = "Server={0}; Database={1}; User={2}; Password={3};Connect Timeout={4};";
         private readonly string connectionString;
-
+        private const string IP_CONN_STRING = "Data Source={0},1433; Network Library=DBMSSOCN; Initial Catalog={1}; User ID={2}; Password={3}; Connect Timeout={4};";
         #endregion Fields
 
         #region Constructor
@@ -171,6 +171,10 @@ namespace ITD_Review_license__plates.Common
         public static string GetConnectionString(string server, string database, string userID, string password, string timeout)
         {
             return string.Format(CONN_STRING, server, database, userID, password, timeout);
+        }
+        public static string GetIpConnectionString(string ip, string database, string userID, string password, string timeout)
+        {
+            return string.Format(IP_CONN_STRING, ip, database, userID, password, timeout);
         }
     }
 }

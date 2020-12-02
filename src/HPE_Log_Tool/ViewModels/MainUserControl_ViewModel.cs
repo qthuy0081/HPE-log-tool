@@ -906,6 +906,13 @@ namespace HPE_Log_Tool.ViewModels
 
             if (view.ShowDialog() == true)
             {
+                insertDbConn = DbHelper.GetIpConnectionString(IP, config.InsertDB.DatabaseName, config.InsertDB.DatabaseUser, config.InsertDB.DatabasePassword, config.InsertDB.DatabaseTimeout.ToString());
+                DbHelper dbHelper = new DbHelper(insertDbConn);
+                if(!dbHelper.CheckOpenConnection())
+                {
+                    MessageBox.Show("Connect db failed!");
+                    return;
+                }
                 try
                 {
                     using (Model1 db = new Model1(insertDbConn))

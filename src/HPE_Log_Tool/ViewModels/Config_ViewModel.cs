@@ -298,6 +298,20 @@ namespace HPE_Log_Tool.ViewModels
                 MessageBox.Show("Connect to Database failed");
             }
         }
+        private void checkIpConnection(ConfigModel config)
+        {
+            string connectionString = DbHelper.GetIpConnectionString(config.DatabaseServer, config.DatabaseName, config.DatabaseUser, config.DatabasePassword, config.DatabaseTimeout.ToString());
+            DbHelper db = new DbHelper(connectionString);
+            bool ret = db.CheckOpenConnection();
+            if (ret)
+            {
+                MessageBox.Show("Connect to Database successfully!");
+            }
+            else
+            {
+                MessageBox.Show("Connect to Database failed");
+            }
+        }
         private bool CanClick()
         {
             if(String.IsNullOrEmpty(NewPassword))
@@ -342,7 +356,7 @@ namespace HPE_Log_Tool.ViewModels
         private ICommand _checkCompareDbConnectionCmd;
         public ICommand checkCompareDbConnectionCmd => _checkCompareDbConnectionCmd ?? (_checkCompareDbConnectionCmd = new RelayCommand(param => { checkConnection(CompareDbConfig); }));
         private ICommand _checkInsertDbConnectionCmd;
-        public ICommand checkInsertDbConnectionCmd => _checkInsertDbConnectionCmd ?? (_checkInsertDbConnectionCmd = new RelayCommand(param => { checkConnection(InsertDbConfig); }));
+        public ICommand checkInsertDbConnectionCmd => _checkInsertDbConnectionCmd ?? (_checkInsertDbConnectionCmd = new RelayCommand(param => { checkIpConnection(InsertDbConfig); }));
         private ICommand _loginCmd;
         public ICommand loginCmd => _loginCmd ?? (_loginCmd = new RelayCommand(param=> { verifyUser(); } ));
 

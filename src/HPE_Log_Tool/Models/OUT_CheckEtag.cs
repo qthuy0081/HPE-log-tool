@@ -89,7 +89,7 @@ namespace HPE_Log_Tool
 
         public int? FC { get; set; }
 
-        public short TransactionStatus { get; set; }
+        public int TransactionStatus { get; set; }
 
         [StringLength(20)]
         public string TicketID { get; set; }

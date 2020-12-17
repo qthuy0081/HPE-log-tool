@@ -1,49 +1,100 @@
-﻿using HPE_Log_Tool.Common;
-using HPE_Log_Tool.Models;
-using HPE_Log_Tool.Views;
-using ITD_Review_license__plates.Common;
-using MoreLinq;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Input;
-using MessageBox = System.Windows.MessageBox;
-
-namespace HPE_Log_Tool.ViewModels
+﻿namespace HPE_Log_Tool.ViewModels
 {
+    using HPE_Log_Tool.Common;
+    using HPE_Log_Tool.Models;
+    using HPE_Log_Tool.Views;
+    using ITD_Review_license__plates.Common;
+    using Newtonsoft.Json;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Net.NetworkInformation;
+    using System.Windows;
+    using System.Windows.Forms;
+    using System.Windows.Input;
+    using MessageBox = System.Windows.MessageBox;
+
+    /// <summary>
+    /// Defines the <see cref="MainUserControl_ViewModel" />.
+    /// </summary>
     public class MainUserControl_ViewModel : BaseViewModel
     {
-        #region Fields
+        /// <summary>
+        /// Defines the isOutCheckSmartCard.
+        /// </summary>
         private const string isOutCheckSmartCard = "WriteLogPrepareCommitReceipt - OUT_CheckSmartCard";
+
+        /// <summary>
+        /// Defines the isOutCheckForceOpen.
+        /// </summary>
         private const string isOutCheckForceOpen = "WriteLogPrepareCommitReceipt - OUT_CheckForceOpen";
+
+        /// <summary>
+        /// Defines the isOutCheckEtag.
+        /// </summary>
         private const string isOutCheckEtag = "WriteLogPrepareCommitReceipt - OUT_CheckEtag";
+
+        /// <summary>
+        /// Defines the isInCheckSmartCard.
+        /// </summary>
         private const string isInCheckSmartCard = "InsertData - IN_CheckSmartCard";
+
+        /// <summary>
+        /// Defines the isInCheckForceOpen.
+        /// </summary>
         private const string isInCheckForceOpen = "InsertData - IN_CheckForceOpen";
+
+        /// <summary>
+        /// Defines the fileNameIN.
+        /// </summary>
         private const string fileNameIN = "\\LogFolder\\InsertTransaction_Log_";
+
+        /// <summary>
+        /// Defines the fileNameOUT.
+        /// </summary>
         private const string fileNameOUT = "\\Logs\\TraceLog_";
+
+        /// <summary>
+        /// Defines the fileExt.
+        /// </summary>
         private const string fileExt = ".txt";
+
+        /// <summary>
+        /// Defines the startTime.
+        /// </summary>
         private DateTime startTime;
+
+        /// <summary>
+        /// Defines the endTime.
+        /// </summary>
         private DateTime endTime;
+
+        /// <summary>
+        /// Defines the config.
+        /// </summary>
         private AppConfig config;
-        string insertDbConn = "";
-        string compareDbConn = "";
-        
 
-        #endregion
+        /// <summary>
+        /// Defines the insertDbConn.
+        /// </summary>
+        internal string insertDbConn = "";
 
-        #region Properties
-        //private string _filePath = "C:/Users/thanh/Downloads/Log_MTC_2020/LogFolder/InsertTransaction_Log_20201020.txt";
+        /// <summary>
+        /// Defines the compareDbConn.
+        /// </summary>
+        internal string compareDbConn = "";
 
+        /// <summary>
+        /// Defines the _ip.
+        /// </summary>
         private string _ip;
+
+        /// <summary>
+        /// Gets or sets the IP.
+        /// </summary>
         public string IP
         {
             get => _ip;
@@ -52,14 +103,21 @@ namespace HPE_Log_Tool.ViewModels
                 if (_ip != value)
                 {
                     _ip = value;
-                    Path = $"\\\\{IP}{AppConfig.path}" ;
+                    Path = $"\\\\{IP}{AppConfig.path}";
                     OnPropertyChanged();
-                    
+
                 }
             }
         }
 
+        /// <summary>
+        /// Defines the _path.
+        /// </summary>
         private string _path;
+
+        /// <summary>
+        /// Gets or sets the Path.
+        /// </summary>
         public string Path
         {
             get => _path;
@@ -72,14 +130,21 @@ namespace HPE_Log_Tool.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Defines the _rowCount.
+        /// </summary>
         private int _rowCount = 0;
-        
+
+        /// <summary>
+        /// Gets or sets the RowCount.
+        /// </summary>
         public int RowCount
         {
             get => _rowCount;
             set
             {
-                if(_rowCount != value)
+                if (_rowCount != value)
                 {
                     _rowCount = value;
                     OnPropertyChanged();
@@ -87,7 +152,35 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _insertButtonContent.
+        /// </summary>
+        private string _insertButtonContent = "Insert";
+
+        /// <summary>
+        /// Gets or sets the InsertButtonContent.
+        /// </summary>
+        public string InsertButtonContent
+        {
+            get => _insertButtonContent;
+            set
+            {
+                if (_insertButtonContent != value)
+                {
+                    _insertButtonContent = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Defines the _timeOff.
+        /// </summary>
         private int _timeOff = 30;
+
+        /// <summary>
+        /// Gets or sets the Timeoff.
+        /// </summary>
         public int Timeoff
         {
             get => _timeOff;
@@ -100,23 +193,38 @@ namespace HPE_Log_Tool.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Defines the _isMissingTrans.
+        /// </summary>
         private bool _isMissingTrans;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsMissingTrans.
+        /// </summary>
         public bool IsMissingTrans
         {
             get => _isMissingTrans;
             set
             {
-                if(_isMissingTrans != value)
+                if (_isMissingTrans != value)
                 {
                     _isMissingTrans = value;
                     OnPropertyChanged();
                     ChangeShift();
-                    
+
                 }
             }
         }
 
+        /// <summary>
+        /// Defines the _SelectedItem.
+        /// </summary>
         private MainUserControl_ViewModel _SelectedItem;
+
+        /// <summary>
+        /// Gets or sets the SelectedItem.
+        /// </summary>
         public MainUserControl_ViewModel SelectedItem
         {
             get => _SelectedItem;
@@ -130,7 +238,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _tCSC.
+        /// </summary>
         private Visibility _tCSC = Visibility.Visible;
+
+        /// <summary>
+        /// Gets or sets the tCSC.
+        /// </summary>
         public Visibility tCSC
         {
             get => _tCSC;
@@ -144,7 +259,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _tCFO.
+        /// </summary>
         private Visibility _tCFO;
+
+        /// <summary>
+        /// Gets or sets the tCFO.
+        /// </summary>
         public Visibility tCFO
         {
             get => _tCFO;
@@ -158,7 +280,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _tCE.
+        /// </summary>
         private Visibility _tCE;
+
+        /// <summary>
+        /// Gets or sets the tCE.
+        /// </summary>
         public Visibility tCE
         {
             get => _tCE;
@@ -172,7 +301,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _tICS.
+        /// </summary>
         private Visibility _tICS;
+
+        /// <summary>
+        /// Gets or sets the tICS.
+        /// </summary>
         public Visibility tICS
         {
             get => _tICS;
@@ -186,7 +322,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _tICFO.
+        /// </summary>
         private Visibility _tICFO;
+
+        /// <summary>
+        /// Gets or sets the tICFO.
+        /// </summary>
         public Visibility tICFO
         {
             get => _tICFO;
@@ -199,7 +342,15 @@ namespace HPE_Log_Tool.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Defines the _tDup.
+        /// </summary>
         private Visibility _tDup;
+
+        /// <summary>
+        /// Gets or sets the tDup.
+        /// </summary>
         public Visibility tDup
         {
             get => _tDup;
@@ -213,7 +364,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _inCheckSmartCard.
+        /// </summary>
         private ObservableCollection<IN_CheckSmartCard> _inCheckSmartCard;
+
+        /// <summary>
+        /// Gets or sets the IN_CheckSmartCards.
+        /// </summary>
         public ObservableCollection<IN_CheckSmartCard> IN_CheckSmartCards
         {
             get => _inCheckSmartCard;
@@ -227,7 +385,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _inCheckSmartCardFiltered.
+        /// </summary>
         private ObservableCollection<IN_CheckSmartCard> _inCheckSmartCardFiltered;
+
+        /// <summary>
+        /// Gets or sets the IN_CheckSmartCardsFiltered.
+        /// </summary>
         public ObservableCollection<IN_CheckSmartCard> IN_CheckSmartCardsFiltered
         {
             get => _inCheckSmartCardFiltered;
@@ -241,7 +406,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _inCheckForceOpen.
+        /// </summary>
         private ObservableCollection<IN_CheckForceOpen> _inCheckForceOpen;
+
+        /// <summary>
+        /// Gets or sets the IN_CheckForceOpens.
+        /// </summary>
         public ObservableCollection<IN_CheckForceOpen> IN_CheckForceOpens
         {
             get => _inCheckForceOpen;
@@ -255,7 +427,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _inCheckForceOpenFiltered.
+        /// </summary>
         private ObservableCollection<IN_CheckForceOpen> _inCheckForceOpenFiltered;
+
+        /// <summary>
+        /// Gets or sets the IN_CheckForceOpensFiltered.
+        /// </summary>
         public ObservableCollection<IN_CheckForceOpen> IN_CheckForceOpensFiltered
         {
             get => _inCheckForceOpenFiltered;
@@ -269,7 +448,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _outCheckSmartCard.
+        /// </summary>
         private ObservableCollection<OUT_CheckSmartCard> _outCheckSmartCard;
+
+        /// <summary>
+        /// Gets or sets the OUT_CheckSmartCards.
+        /// </summary>
         public ObservableCollection<OUT_CheckSmartCard> OUT_CheckSmartCards
         {
             get => _outCheckSmartCard;
@@ -283,9 +469,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
-
-
+        /// <summary>
+        /// Defines the _outCheckForceOpen.
+        /// </summary>
         private ObservableCollection<OUT_CheckForceOpen> _outCheckForceOpen;
+
+        /// <summary>
+        /// Gets or sets the OUT_CheckForceOpens.
+        /// </summary>
         public ObservableCollection<OUT_CheckForceOpen> OUT_CheckForceOpens
         {
             get => _outCheckForceOpen;
@@ -299,7 +490,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _outCheckEtag.
+        /// </summary>
         private ObservableCollection<OUT_CheckEtag> _outCheckEtag;
+
+        /// <summary>
+        /// Gets or sets the OUT_CheckEtags.
+        /// </summary>
         public ObservableCollection<OUT_CheckEtag> OUT_CheckEtags
         {
             get => _outCheckEtag;
@@ -313,7 +511,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _outCheckSmartCardFiltered.
+        /// </summary>
         private ObservableCollection<OUT_CheckSmartCard> _outCheckSmartCardFiltered;
+
+        /// <summary>
+        /// Gets or sets the OUT_CheckSmartCardsFiltered.
+        /// </summary>
         public ObservableCollection<OUT_CheckSmartCard> OUT_CheckSmartCardsFiltered
         {
             get => _outCheckSmartCardFiltered;
@@ -327,7 +532,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _outCheckForceOpenFiltered.
+        /// </summary>
         private ObservableCollection<OUT_CheckForceOpen> _outCheckForceOpenFiltered;
+
+        /// <summary>
+        /// Gets or sets the OUT_CheckForceOpensFiltered.
+        /// </summary>
         public ObservableCollection<OUT_CheckForceOpen> OUT_CheckForceOpensFiltered
         {
             get => _outCheckForceOpenFiltered;
@@ -341,7 +553,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _outCheckEtagFiltered.
+        /// </summary>
         private ObservableCollection<OUT_CheckEtag> _outCheckEtagFiltered;
+
+        /// <summary>
+        /// Gets or sets the OUT_CheckEtagsFiltered.
+        /// </summary>
         public ObservableCollection<OUT_CheckEtag> OUT_CheckEtagsFiltered
         {
             get => _outCheckEtagFiltered;
@@ -355,9 +574,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
-
-
+        /// <summary>
+        /// Defines the _tableList.
+        /// </summary>
         private ObservableCollection<string> _tableList;
+
+        /// <summary>
+        /// Gets or sets the tableList.
+        /// </summary>
         public ObservableCollection<string> tableList
         {
             get => _tableList;
@@ -371,7 +595,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _shiftList.
+        /// </summary>
         private List<LS_Shift> _shiftList;
+
+        /// <summary>
+        /// Gets or sets the shiftList.
+        /// </summary>
         public List<LS_Shift> shiftList
         {
             get => _shiftList;
@@ -384,7 +615,15 @@ namespace HPE_Log_Tool.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Defines the _shift.
+        /// </summary>
         private LS_Shift _shift;
+
+        /// <summary>
+        /// Gets or sets the Shift.
+        /// </summary>
         public LS_Shift Shift
         {
             get => _shift;
@@ -398,7 +637,15 @@ namespace HPE_Log_Tool.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Defines the _filePaths.
+        /// </summary>
         private List<string> _filePaths;
+
+        /// <summary>
+        /// Gets or sets the filePaths.
+        /// </summary>
         public List<string> filePaths
         {
             get => _filePaths;
@@ -413,7 +660,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _selectedTable.
+        /// </summary>
         private string _selectedTable;
+
+        /// <summary>
+        /// Gets or sets the SelectedTable.
+        /// </summary>
         public string SelectedTable
         {
             get => _selectedTable;
@@ -429,7 +683,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _selectedShift.
+        /// </summary>
         private string _selectedShift;
+
+        /// <summary>
+        /// Gets or sets the SelectedShift.
+        /// </summary>
         public string SelectedShift
         {
             get => _selectedShift;
@@ -443,7 +704,14 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the _selectedDate.
+        /// </summary>
         private DateTime _selectedDate;
+
+        /// <summary>
+        /// Gets or sets the SelectedDate.
+        /// </summary>
         public DateTime SelectedDate
         {
             get => _selectedDate;
@@ -452,12 +720,19 @@ namespace HPE_Log_Tool.ViewModels
                 if (_selectedDate != value)
                 {
                     _selectedDate = value;
-                    OnPropertyChanged();  
+                    OnPropertyChanged();
                 }
             }
         }
-        //IsCheckedBooleanProperty
+
+        /// <summary>
+        /// Defines the _IsCheckedBooleanProperty.
+        /// </summary>
         private bool _IsCheckedBooleanProperty;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsCheckedBooleanProperty.
+        /// </summary>
         public bool IsCheckedBooleanProperty
         {
             get => _IsCheckedBooleanProperty;
@@ -471,9 +746,10 @@ namespace HPE_Log_Tool.ViewModels
                 }
             }
         }
-        #endregion
 
-        #region Methods
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainUserControl_ViewModel"/> class.
+        /// </summary>
         public MainUserControl_ViewModel()
         {
             config = AppConfig.LoadConfig();
@@ -490,7 +766,7 @@ namespace HPE_Log_Tool.ViewModels
             IN_CheckForceOpens = new ObservableCollection<IN_CheckForceOpen>();
             IN_CheckForceOpensFiltered = new ObservableCollection<IN_CheckForceOpen>();
             filePaths = new List<string>();
-            tableList = new ObservableCollection<string> { 
+            tableList = new ObservableCollection<string> {
                 "OUT_CheckSmartCard",
                 "OUT_CheckForceOpen",
                 "OUT_CheckEtag",
@@ -504,20 +780,35 @@ namespace HPE_Log_Tool.ViewModels
             Path = AppConfig.path;
         }
 
-
+        /// <summary>
+        /// The CanClick.
+        /// </summary>
+        /// <returns>The <see cref="bool"/>.</returns>
         private bool CanClick()
         {
-            return true;
+            return InsertButtonContent == "Insert";
         }
 
+        /// <summary>
+        /// The Check.
+        /// </summary>
         private void Check()
         {
             Utility.checkExist(Path);
         }
+
+        /// <summary>
+        /// The CanBrowse.
+        /// </summary>
+        /// <returns>The <see cref="bool"/>.</returns>
         private bool CanBrowse()
         {
             return true;
         }
+
+        /// <summary>
+        /// The Browse.
+        /// </summary>
         private void Browse()
         {
 
@@ -529,7 +820,7 @@ namespace HPE_Log_Tool.ViewModels
                     //MessageBox.Show("IP address is empty");
                     //return;
                     var fbd = new FolderBrowserDialog
-                    {                       
+                    {
                     };
 
                     DialogResult result = fbd.ShowDialog();
@@ -567,20 +858,18 @@ namespace HPE_Log_Tool.ViewModels
                         }
                     }
                 }
-              
-                //else
-                //{
-                //    MessageBox.Show("Incorrect IP address");
 
-                //}
+                
             }
             catch (Exception ex)
             {
 
             }
-
         }
 
+        /// <summary>
+        /// The ClearData.
+        /// </summary>
         private void ClearData()
         {
             OUT_CheckSmartCards.Clear();
@@ -589,43 +878,49 @@ namespace HPE_Log_Tool.ViewModels
             filePaths.Clear();
         }
 
+        /// <summary>
+        /// The toDateStamp.
+        /// </summary>
+        /// <param name="Date">The Date<see cref="DateTime"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         private string toDateStamp(DateTime Date)
         {
             string date = Date.ToString("yyyyMMdd");
             return date;
         }
 
-
+        /// <summary>
+        /// The ReadLogFile.
+        /// </summary>
         private void ReadLogFile()
         {
             // Giờ có sẵn 1 list path của các fileLog đó rồi nè
             // Xong từ ngày cái mình lấy ra cái đuôi rồi lấy cái file tương ứng theo ngày đó (Ex: 20/10/2020 -> InsertTransaction_Log_20201020)
             string currentOutDate = Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
-            string tomorrowOutDate =Path + fileNameOUT + SelectedDate.ToString("yyyy-MM-dd") + ".log";
+            string tomorrowOutDate = Path + fileNameOUT + SelectedDate.AddDays(1).ToString("yyyy-MM-dd") + ".log";
             string currentInDate = Path + fileNameIN + toDateStamp(SelectedDate) + fileExt;
             string tomorrowInDate = Path + fileNameIN + toDateStamp(SelectedDate.AddDays(1)) + fileExt;
             string[] lines;
             int startIndex;
             int endIndex;
             string json;
-            // Lấy được chuỗi tương ứng rồi, ez        
-            // Trước khi lọc thì phải clear cái grid view đã nè
+            // Lấy được chuỗi tương ứng rồi       
+            // Trước khi lọc thì phải clear cái grid view 
             ClearData();
             filePaths.Add(currentInDate);
             filePaths.Add(tomorrowInDate);
             filePaths.Add(currentOutDate);
             filePaths.Add(tomorrowOutDate);
-            // Clear xong thì load lại lên nè
-            // Cái rồi đọc hết ra rồi mới lọc theo ca
+
             foreach (string filePath in filePaths)
             {
                 if (File.Exists(filePath))
                 {
                     try
-                    {  
+                    {
                         lines = File.ReadAllLines(filePath);
                         foreach (string line in lines)
-                        {                           
+                        {
                             if (line.Contains(isInCheckSmartCard))
                             {
                                 startIndex = line.IndexOf('{');
@@ -667,24 +962,27 @@ namespace HPE_Log_Tool.ViewModels
                                 OUT_CheckEtags.Add(item);
                             }
                         }
-                        
+
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Load Failed: " + ex.Message);
+                        return;
                     }
                 }
-               
+
             }
             FirstLoad();
             MessageBox.Show("Load dữ liệu thành công!");
-            // Xong rồi nè ahihi
         }
 
+        /// <summary>
+        /// The FirstLoad.
+        /// </summary>
         private void FirstLoad()
         {
             startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));
-            endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59));
+            endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59)).AddMinutes(Timeoff);
             OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
             OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
             OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
@@ -692,7 +990,11 @@ namespace HPE_Log_Tool.ViewModels
             IN_CheckForceOpensFiltered = new ObservableCollection<IN_CheckForceOpen>(from item in IN_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime orderby item.CheckDate select item);
             CountLogRow();
         }
-        
+
+        /// <summary>
+        /// The FilterTransByTime.
+        /// </summary>
+        /// <param name="shift">The shift<see cref="int"/>.</param>
         private void FilterTransByTime(int shift = 0)
         {
             switch (SelectedTable)
@@ -703,7 +1005,7 @@ namespace HPE_Log_Tool.ViewModels
                         IN_CheckSmartCardsFiltered = new ObservableCollection<IN_CheckSmartCard>(from item in IN_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
-                            IN_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_InCheckSmartCard(IN_CheckSmartCardsFiltered, compareDbConn);
+                            IN_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_InCheckSmartCard(IN_CheckSmartCardsFiltered, compareDbConn, startTime, endTime);
                         }
                         DuplicatedSmartID(IsCheckedBooleanProperty);
                         break;
@@ -713,7 +1015,7 @@ namespace HPE_Log_Tool.ViewModels
                         IN_CheckForceOpensFiltered = new ObservableCollection<IN_CheckForceOpen>(from item in IN_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
-                            IN_CheckForceOpensFiltered = DataProvider.filterMissingTrans_InCheckForceOpen(IN_CheckForceOpensFiltered, compareDbConn);
+                            IN_CheckForceOpensFiltered = DataProvider.filterMissingTrans_InCheckForceOpen(IN_CheckForceOpensFiltered, compareDbConn, startTime, endTime);
                         }
                         DuplicatedSmartID(IsCheckedBooleanProperty);
                         break;
@@ -723,7 +1025,7 @@ namespace HPE_Log_Tool.ViewModels
                         OUT_CheckSmartCardsFiltered = new ObservableCollection<OUT_CheckSmartCard>(from item in OUT_CheckSmartCards where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
-                            OUT_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered, compareDbConn);
+                            OUT_CheckSmartCardsFiltered = DataProvider.filterMissingTrans_OutCheckSmartCard(OUT_CheckSmartCardsFiltered, compareDbConn, startTime, endTime);
                         }
                         DuplicatedSmartID(IsCheckedBooleanProperty);
                         break;
@@ -733,7 +1035,7 @@ namespace HPE_Log_Tool.ViewModels
                         OUT_CheckForceOpensFiltered = new ObservableCollection<OUT_CheckForceOpen>(from item in OUT_CheckForceOpens where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
-                            OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, compareDbConn);
+                            OUT_CheckForceOpensFiltered = DataProvider.filterMissingTrans_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, compareDbConn, startTime, endTime);
                         }
                         DuplicatedSmartID(IsCheckedBooleanProperty);
                         break;
@@ -743,7 +1045,8 @@ namespace HPE_Log_Tool.ViewModels
                         OUT_CheckEtagsFiltered = new ObservableCollection<OUT_CheckEtag>(from item in OUT_CheckEtags where item.CheckDate >= startTime && item.CheckDate <= endTime && (shift == 0 || shift == item.ShiftID) orderby item.CheckDate select item);
                         if (IsMissingTrans)
                         {
-                            OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn);
+
+                            OUT_CheckEtagsFiltered = DataProvider.filterMissingTrans_OUT_CheckEtag(OUT_CheckEtagsFiltered, compareDbConn, startTime, endTime);
                         }
                         DuplicatedSmartID(IsCheckedBooleanProperty);
                         break;
@@ -751,52 +1054,56 @@ namespace HPE_Log_Tool.ViewModels
             }
         }
 
-        // Change shift
+        /// <summary>
+        /// The ChangeShift.
+        /// </summary>
         private void ChangeShift()
         {
-            
-            if(_shift != null)
-            switch (Shift.Name)
-            {
-               
-                case "All":
-                    {
-                        // 6:30:00 today -> 6:30:00 tomorrow
-                        startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));
-                        endTime = startTime.AddDays(1).AddMinutes(Timeoff);
-                        FilterTransByTime();
-                        break;
-                    }
-                case "1":
-                    {
-                        // 6:30:00 to 11:29:59 
-                        startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));          
-                        endTime = SelectedDate.Add(new TimeSpan(11, 29, 59)).AddMinutes(Timeoff);
-                        FilterTransByTime(1);
-                        break;
-                    }
-                case "2":
-                    {
-                        // 11:30:00 to 17:59:59
-                        startTime = SelectedDate.Add(new TimeSpan(11, 30, 00));
-                        endTime = SelectedDate.Add(new TimeSpan(17, 59, 59)).AddMinutes(Timeoff);
-                        FilterTransByTime(2);
-                        break;
-                    }
-                case "3":
-                    {
-                        // 18:00:00 today -> 6:29:59 tomorrow
-                        startTime = SelectedDate.Add(new TimeSpan(18, 00, 00));
-                        endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59)).AddMinutes(Timeoff);
-                        FilterTransByTime(3);
-                        break;
-                    }
-            }
+
+            if (_shift != null)
+                switch (Shift.Name)
+                {
+
+                    case "All":
+                        {
+                            // 6:30:00 today -> 6:30:00 tomorrow
+                            startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));
+                            endTime = startTime.AddDays(1).AddMinutes(Timeoff);
+                            FilterTransByTime();
+                            break;
+                        }
+                    case "1":
+                        {
+                            // 6:30:00 to 11:29:59 
+                            startTime = SelectedDate.Add(new TimeSpan(6, 30, 00));
+                            endTime = SelectedDate.Add(new TimeSpan(11, 29, 59)).AddMinutes(Timeoff);
+                            FilterTransByTime(1);
+                            break;
+                        }
+                    case "2":
+                        {
+                            // 11:30:00 to 17:59:59
+                            startTime = SelectedDate.Add(new TimeSpan(11, 30, 00));
+                            endTime = SelectedDate.Add(new TimeSpan(17, 59, 59)).AddMinutes(Timeoff);
+                            FilterTransByTime(2);
+                            break;
+                        }
+                    case "3":
+                        {
+                            // 18:00:00 today -> 6:29:59 tomorrow
+                            startTime = SelectedDate.Add(new TimeSpan(18, 00, 00));
+                            endTime = SelectedDate.AddDays(1).Add(new TimeSpan(6, 29, 59)).AddMinutes(Timeoff);
+                            FilterTransByTime(3);
+                            break;
+                        }
+                }
             CountLogRow();
         }
 
-        // Bind datagrid by table 
-
+        /// <summary>
+        /// The ChangeTable.
+        /// </summary>
+        /// <param name="table">The table<see cref="string"/>.</param>
         private void ChangeTable(string table)
         {
             switch (table)
@@ -855,12 +1162,14 @@ namespace HPE_Log_Tool.ViewModels
                     }
             }
             CountLogRow();
-            
         }
 
+        /// <summary>
+        /// The CountLogRow.
+        /// </summary>
         private void CountLogRow()
         {
-            switch(SelectedTable)
+            switch (SelectedTable)
             {
                 case "OUT_CheckSmartCard":
                     RowCount = OUT_CheckSmartCardsFiltered.Count;
@@ -879,13 +1188,16 @@ namespace HPE_Log_Tool.ViewModels
                     break;
             }
         }
-        // Load Config Form
-       
+
+        /// <summary>
+        /// The DuplicatedSmartID.
+        /// </summary>
+        /// <param name="IsCheckedBooleanProperty">The IsCheckedBooleanProperty<see cref="bool"/>.</param>
         private void DuplicatedSmartID(bool IsCheckedBooleanProperty)
         {
-            if(IsCheckedBooleanProperty)
+            if (IsCheckedBooleanProperty)
             {
-                switch(SelectedTable)
+                switch (SelectedTable)
                 {
                     case "OUT_CheckSmartCard":
                         var dup = OUT_CheckSmartCardsFiltered.GroupBy(x => x.SmartCardID).Where(g => g.Count() > 1).Select(x => x.Key);
@@ -897,10 +1209,14 @@ namespace HPE_Log_Tool.ViewModels
                         var rs2 = IN_CheckSmartCardsFiltered.Where(w => dup2.Contains(w.SmartCardID));
                         IN_CheckSmartCardsFiltered = new ObservableCollection<IN_CheckSmartCard>(rs2);
                         break;
-                }                                                                           
-            }    
+                }
+            }
         }
-        private void InsertLog()
+
+        /// <summary>
+        /// The InsertLog.
+        /// </summary>
+        private async void InsertLog()
         {
             ActionView view = new ActionView();
 
@@ -908,99 +1224,114 @@ namespace HPE_Log_Tool.ViewModels
             {
                 insertDbConn = DbHelper.GetIpConnectionString(IP, config.InsertDB.DatabaseName, config.InsertDB.DatabaseUser, config.InsertDB.DatabasePassword, config.InsertDB.DatabaseTimeout.ToString());
                 DbHelper dbHelper = new DbHelper(insertDbConn);
-                if(!dbHelper.CheckOpenConnection())
+                if (!dbHelper.CheckOpenConnection())
                 {
                     MessageBox.Show("Connect db failed!");
                     return;
                 }
-                try
+                InsertButtonContent = "Inserting...! Please wait";
+                switch (SelectedTable)
                 {
-                    using (Model1 db = new Model1(compareDbConn))
-                    {
-                        switch (SelectedTable)
+                    case "IN_CheckSmartCard":
                         {
-                            case "IN_CheckSmartCard":
-                                {
-                                    if (IN_CheckSmartCardsFiltered.Count < 1)
-                                        MessageBox.Show("Không có dữ liệu để thêm!");
-                                    else
-                                        db.IN_CheckSmartCard.AddRange(IN_CheckSmartCardsFiltered);
-                                    break;
-                                }
-                            case "IN_CheckForceOpen":
-                                {
-                                    if (IN_CheckForceOpensFiltered.Count < 1)
-                                        MessageBox.Show("Không có dữ liệu để thêm!");
-                                    else
-                                        db.IN_CheckForceOpen.AddRange(IN_CheckForceOpensFiltered);
-                                    break;
-                                }
-                            case "OUT_CheckSmartCard":
-                                {
-                                    if (OUT_CheckSmartCardsFiltered.Count < 1)
-                                        MessageBox.Show("Không có dữ liệu để thêm!");
-                                    else
-                                        db.OUT_CheckSmartCard.AddRange(OUT_CheckSmartCardsFiltered);
-                                    break;
-                                }
-                            case "OUT_CheckForceOpen":
-                                {
-                                    if (OUT_CheckForceOpensFiltered.Count < 1)
-                                        MessageBox.Show("Không có dữ liệu để thêm!");
-                                    else
-                                        db.OUT_CheckForceOpen.AddRange(OUT_CheckForceOpensFiltered);
-                                    break;
-                                }
-                            case "OUT_CheckEtag":
-                                {
-                                    if (OUT_CheckEtagsFiltered.Count < 1)
-                                        MessageBox.Show("Không có dữ liệu để thêm!");
-                                    else
-                                        db.OUT_CheckEtag.AddRange(OUT_CheckEtagsFiltered);
-                                    break;
-                                }
+                            if (IN_CheckSmartCardsFiltered.Count < 1)
+                                MessageBox.Show("Không có dữ liệu để thêm!");
+                            else
+                                IN_CheckSmartCardsFiltered = await DataProvider.insert_IN_CheckSmartCard(IN_CheckSmartCards, insertDbConn);
+                            break;
                         }
-                        if (db.SaveChanges() > 0)
+                    case "IN_CheckForceOpen":
                         {
-                            OUT_CheckSmartCardsFiltered.Clear();
-                            OUT_CheckEtagsFiltered.Clear();
-                            OUT_CheckForceOpensFiltered.Clear();
-                            IN_CheckSmartCardsFiltered.Clear();
-                            IN_CheckForceOpensFiltered.Clear();
-                            CountLogRow();
-                            MessageBox.Show("Thêm dữ liệu thành công!");
+                            if (IN_CheckForceOpensFiltered.Count < 1)
+                                MessageBox.Show("Không có dữ liệu để thêm!");
+                            else
+                                IN_CheckForceOpensFiltered = await DataProvider.insert_IN_CheckForceOpen(IN_CheckForceOpensFiltered, insertDbConn);
+                            break;
                         }
-                    }
+                    case "OUT_CheckSmartCard":
+                        {
+                            if (OUT_CheckSmartCardsFiltered.Count < 1)
+                                MessageBox.Show("Không có dữ liệu để thêm!");
+                            else
+                                OUT_CheckSmartCardsFiltered = await DataProvider.insert_OUT_CheckSmartCard(OUT_CheckSmartCardsFiltered, insertDbConn);
+                            break;
+                        }
+                    case "OUT_CheckForceOpen":
+                        {
+                            if (OUT_CheckForceOpensFiltered.Count < 1)
+                                MessageBox.Show("Không có dữ liệu để thêm!");
+                            else
+                                OUT_CheckForceOpensFiltered = await DataProvider.insert_OUT_CheckForceOpen(OUT_CheckForceOpensFiltered, insertDbConn);
+                            break;
+                        }
+                    case "OUT_CheckEtag":
+                        {
+                            if (OUT_CheckEtagsFiltered.Count < 1)
+                                MessageBox.Show("Không có dữ liệu để thêm!");
+                            else
+                            {
+                                OUT_CheckEtagsFiltered = await DataProvider.insert_OUT_CheckEtag(OUT_CheckEtagsFiltered, insertDbConn);
+                            }
+                            break;
+                        }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
+                InsertButtonContent = "Insert";
             }
             else
             {
                 MessageBox.Show("Thêm dữ liệu không thành công, vui lòng thử lại!");
             }
-
+            CountLogRow();
         }
-        
-        #endregion
 
-        #region Commands
+        /// <summary>
+        /// Defines the _cmdInsertLog.
+        /// </summary>
         private ICommand _cmdInsertLog;
+
+        /// <summary>
+        /// Gets the cmdInsertLog.
+        /// </summary>
         public ICommand cmdInsertLog => _cmdInsertLog ?? (_cmdInsertLog = new RelayCommand(param => { InsertLog(); }, param => CanClick()));
 
+        /// <summary>
+        /// Defines the _cmdReadLog.
+        /// </summary>
         private ICommand _cmdReadLog;
+
+        /// <summary>
+        /// Gets the cmdReadLog.
+        /// </summary>
         public ICommand cmdReadLog => _cmdReadLog ?? (_cmdReadLog = new RelayCommand(param => { ReadLogFile(); }, param => CanClick()));
 
+        /// <summary>
+        /// Defines the _cmdCheck.
+        /// </summary>
         private ICommand _cmdCheck;
+
+        /// <summary>
+        /// Gets the cmdCheck.
+        /// </summary>
         public ICommand cmdCheck => _cmdCheck ?? (_cmdCheck = new RelayCommand(param => { Check(); }, param => CanClick()));
 
+        /// <summary>
+        /// Defines the _cmdBrowse.
+        /// </summary>
         private ICommand _cmdBrowse;
+
+        /// <summary>
+        /// Gets the cmdBrowse.
+        /// </summary>
         public ICommand cmdBrowse => _cmdBrowse ?? (_cmdBrowse = new RelayCommand(param => { Browse(); }, param => CanBrowse()));
 
+        /// <summary>
+        /// Defines the _checkDup.
+        /// </summary>
         private ICommand _checkDup;
+
+        /// <summary>
+        /// Gets the checkDup.
+        /// </summary>
         public ICommand checkDup => _checkDup ?? (_checkDup = new RelayCommand(param => { DuplicatedSmartID(IsCheckedBooleanProperty); }));
-        #endregion
     }
 }
